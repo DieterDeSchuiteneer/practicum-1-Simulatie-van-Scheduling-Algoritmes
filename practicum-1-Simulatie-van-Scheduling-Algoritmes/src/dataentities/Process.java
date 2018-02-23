@@ -1,6 +1,6 @@
 package dataentities;
 
-public class Process implements Comparable<Process> {
+public class Process {
     private int pid;
     private int arrivalTime;
     private int serviceTime;
@@ -43,7 +43,7 @@ public class Process implements Comparable<Process> {
     }
 
     @Override
-    public int compareTo(Process o) {
-        return this.arrivalTime - o.arrivalTime;
+    public String toString() {
+        return pid+ ": "+ arrivalTime + "; " + serviceTime ;
     }
 }

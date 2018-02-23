@@ -55,13 +55,12 @@ public class GUI extends JDialog {
     }
 
     private void onRun() {
-        /*if(logic.getFile().equals(""))
+        if(logic.getFile().equals(""))
             System.out.println("No file");
         else{
             System.out.println("run");
             logic.execute("PLACEHOLDER");
-        }*/
-        logic.execute("");
+        }
     }
 
     private void onFileOpen() {

@@ -39,8 +39,9 @@ public class XMLReader {
                     int pid = Integer.parseInt(eElement.getElementsByTagName("pid").item(0).getTextContent());
                     int arrivaltime = Integer.parseInt(eElement.getElementsByTagName("arrivaltime").item(0).getTextContent());
                     int servicetime = Integer.parseInt(eElement.getElementsByTagName("servicetime").item(0).getTextContent());
-
-                    processes.addProcess(new Process(pid, arrivaltime, servicetime));
+                    Process tempProcess = new Process(pid, arrivaltime, servicetime);
+                    System.out.println(tempProcess.toString());
+                    processes.addProcess(tempProcess);
                 }
             }
         } catch (Exception e) {

@@ -11,7 +11,7 @@ public class Logic {
     private String file;
     private Processes processes;
     public Logic() {
-        this.file = "E:\\2017-2018\\Semester 2\\Besturingssystemen 2\\Labo\\Labo1\\processen10000.xml";
+        this.file = "";
         io = new XMLReader();
     }
 
