@@ -4,6 +4,7 @@ import logic.Logic;
 
 import javax.swing.*;
 import java.awt.event.*;
+import java.io.File;
 
 public class GUI extends JDialog {
     private Logic logic;
@@ -54,15 +55,25 @@ public class GUI extends JDialog {
     }
 
     private void onRun() {
-        if(logic.getFile().equals(""))
-        System.out.println("No file");
-        else
+        /*if(logic.getFile().equals(""))
+            System.out.println("No file");
+        else{
             System.out.println("run");
+            logic.execute("PLACEHOLDER");
+        }*/
+        logic.execute("");
     }
 
     private void onFileOpen() {
         JFileChooser fc = new JFileChooser();
         fc.showOpenDialog(contentPane);
+        File file = fc.getSelectedFile();
+        if(file != null){
+            logic.setFile(file.getAbsolutePath());
+            this.textFieldFile.setText(file.getAbsolutePath());
+        }
+        else
+            this.textFieldFile.setText("No file selected");
     }
 
     private void onCancel() {

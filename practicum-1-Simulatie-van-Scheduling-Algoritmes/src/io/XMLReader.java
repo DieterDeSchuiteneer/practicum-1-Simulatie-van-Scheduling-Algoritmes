@@ -14,7 +14,7 @@ import java.io.File;
 public class XMLReader {
     public Processes readXMLFile(String path) {
         Processes processes = new Processes();
-
+        System.out.println(path);
         try {
 
             File fXmlFile = new File(path);
@@ -28,10 +28,11 @@ public class XMLReader {
 
             NodeList nList = doc.getElementsByTagName("process");
 
-
+            System.out.println(nList.getLength());
             for (int temp = 0; temp < nList.getLength(); temp++) {
 
                 Node nNode = nList.item(temp);
+                System.out.println(nNode.getChildNodes().item(3).getAttributes().toString());
 
                 if (nNode.getNodeType() == Node.ELEMENT_NODE) {
 

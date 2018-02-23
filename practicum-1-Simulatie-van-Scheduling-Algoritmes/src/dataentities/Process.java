@@ -1,12 +1,25 @@
 package dataentities;
 
-public class Process {
+public class Process implements Comparable<Process> {
     private int pid;
     private int arrivalTime;
     private int serviceTime;
     private int startTime;
     private int endTime;
     private int waitTime;
+
+    public int getPid() {
+        return pid;
+    }
+
+    public int getArrivalTime() {
+        return arrivalTime;
+    }
+
+    public int getServiceTime() {
+        return serviceTime;
+    }
+
     private int tat;
     private int ntat;
 
@@ -22,6 +35,15 @@ public class Process {
 
     public void setEndTime(int endTime) {
         this.endTime = endTime;
-        //Hier moet nog TAT NTAT en WAITTIME geset worden.
+        //TODO: Set TAT NTAT and WAITTIME.
+    }
+
+    public int getWaitTime() {
+        return waitTime;
+    }
+
+    @Override
+    public int compareTo(Process o) {
+        return this.arrivalTime - o.arrivalTime;
     }
 }
