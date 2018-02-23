@@ -7,6 +7,9 @@ public class Process {
     private int startTime;
     private int endTime;
     private int waitTime;
+    private double  tat;
+    private double  ntat;
+
 
     public int getPid() {
         return pid;
@@ -20,30 +23,41 @@ public class Process {
         return serviceTime;
     }
 
-    private int tat;
-    private int ntat;
-
     public Process(int pid, int arrivalTime, int serviceTime) {
         this.pid = pid;
         this.arrivalTime = arrivalTime;
         this.serviceTime = serviceTime;
     }
 
-    public void setStartTime(int startTime) {
-        this.startTime = startTime;
-    }
 
     public void setEndTime(int endTime) {
         this.endTime = endTime;
-        //TODO: Set TAT NTAT and WAITTIME.
+        this.startTime = endTime - this.serviceTime;
+        this.waitTime = this.startTime - this.arrivalTime;
+        this.tat = this.serviceTime + this.waitTime;
+        this.ntat = this.tat / this.serviceTime;
+    }
+
+    private void setWaitTime() {
+
+    }
+
+    private void setTat() {
+    }
+
+    private void setNtat() {
     }
 
     public int getWaitTime() {
         return waitTime;
     }
 
+    public int getEndTime() {
+        return endTime;
+    }
+
     @Override
     public String toString() {
-        return pid+ ": "+ arrivalTime + "; " + serviceTime ;
+        return "<PID>"+  pid+ ":\t Arrival: "+ arrivalTime + "\t Start: "+ startTime + "\t endTime: " + endTime + "\t serviceTime: " + serviceTime;
     }
 }

@@ -8,8 +8,9 @@ import io.XMLReader;
 public class Logic {
 
     private XMLReader io;
+
     private String file;
-    private Processes processes;
+
     public Logic() {
         this.file = "";
         io = new XMLReader();
@@ -29,7 +30,10 @@ public class Logic {
     }
 
     public void execute(String type) {
-        this.processes = io.readXMLFile(this.file);
+        Processes processes = io.readXMLFile(this.file);
+        FCFS fcfs = new FCFS();
+        fcfs.executeFCFS(processes.getSortedByArrivalProcessList());
+        processes.getSortedByArrivalProcessList().forEach(p-> System.out.println(p.toString()));
         System.out.println("File loaded");
     }
 }

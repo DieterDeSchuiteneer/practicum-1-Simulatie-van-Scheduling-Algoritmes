@@ -8,12 +8,17 @@ import java.util.*;
 public class FCFS {
     public Queue<Process> processesTodo;
 
-    public void SetProcesses(Processes processes){
 
-        this.processesTodo.addAll( processes.getSortedByArrivalProcessList());
-    }
+    public void executeFCFS(List<Process> processList){
+        int previousEndTime = 0;
 
-    public void executeFCFS(List processes){
+        for (Process process: processList) {
+            if(previousEndTime < process.getArrivalTime())
+                process.setEndTime(process.getArrivalTime() + process.getServiceTime());
+            else
+                process.setEndTime(previousEndTime + process.getServiceTime());
+            previousEndTime = process.getEndTime();
+        }
 
     }
 

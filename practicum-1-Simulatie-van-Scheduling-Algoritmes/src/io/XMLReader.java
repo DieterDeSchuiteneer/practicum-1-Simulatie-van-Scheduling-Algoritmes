@@ -28,7 +28,6 @@ public class XMLReader {
 
             NodeList nList = doc.getElementsByTagName("process");
 
-            System.out.println(nList.getLength());
             for (int temp = 0; temp < nList.getLength(); temp++) {
 
                 Node nNode = nList.item(temp);
@@ -40,7 +39,6 @@ public class XMLReader {
                     int arrivaltime = Integer.parseInt(eElement.getElementsByTagName("arrivaltime").item(0).getTextContent());
                     int servicetime = Integer.parseInt(eElement.getElementsByTagName("servicetime").item(0).getTextContent());
                     Process tempProcess = new Process(pid, arrivaltime, servicetime);
-                    System.out.println(tempProcess.toString());
                     processes.addProcess(tempProcess);
                 }
             }
