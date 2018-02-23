@@ -32,14 +32,13 @@ public class XMLReader {
             for (int temp = 0; temp < nList.getLength(); temp++) {
 
                 Node nNode = nList.item(temp);
-                System.out.println(nNode.getChildNodes().item(3).getAttributes().toString());
 
                 if (nNode.getNodeType() == Node.ELEMENT_NODE) {
 
                     Element eElement = (Element) nNode;
-                    int pid = Integer.parseInt(eElement.getAttribute("pid"));
-                    int arrivaltime = Integer.parseInt(eElement.getAttribute("arrivaltime"));
-                    int servicetime = Integer.parseInt(eElement.getAttribute("servicetime"));
+                    int pid = Integer.parseInt(eElement.getElementsByTagName("pid").item(0).getTextContent());
+                    int arrivaltime = Integer.parseInt(eElement.getElementsByTagName("arrivaltime").item(0).getTextContent());
+                    int servicetime = Integer.parseInt(eElement.getElementsByTagName("servicetime").item(0).getTextContent());
 
                     processes.addProcess(new Process(pid, arrivaltime, servicetime));
                 }
