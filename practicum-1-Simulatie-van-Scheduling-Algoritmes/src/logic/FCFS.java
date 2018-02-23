@@ -1,13 +1,10 @@
 package logic;
 
 import dataentities.Process;
-import dataentities.Processes;
 
-import java.util.*;
+import java.util.List;
 
 public class FCFS {
-    public Queue<Process> processesTodo;
-
 
     public void executeFCFS(List<Process> processList){
         int previousEndTime = 0;

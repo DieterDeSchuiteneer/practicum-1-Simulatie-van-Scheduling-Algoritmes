@@ -29,6 +29,13 @@ public class Process {
         this.serviceTime = serviceTime;
     }
 
+    public double getTat() {
+        return tat;
+    }
+
+    public double getNtat() {
+        return ntat;
+    }
 
     public void setEndTime(int endTime) {
         this.endTime = endTime;
