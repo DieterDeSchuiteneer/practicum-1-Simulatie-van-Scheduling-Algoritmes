@@ -25,6 +25,9 @@ public class Algorithms {
     public void executeSJF(List<Process> processList) {
         int currentTime = 0;
         Queue processQueue = new LinkedList();
+        for (Process Proce: processList
+             ) {
 
+        }
     }
 }
