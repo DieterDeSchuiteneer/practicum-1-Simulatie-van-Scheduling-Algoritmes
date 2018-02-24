@@ -2,7 +2,9 @@ package logic;
 
 import dataentities.Process;
 
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 public class Algorithms {
 
@@ -21,6 +23,8 @@ public class Algorithms {
 
 
     public void executeSJF(List<Process> processList) {
+        int currentTime = 0;
+        Queue processQueue = new LinkedList();
 
     }
 }
