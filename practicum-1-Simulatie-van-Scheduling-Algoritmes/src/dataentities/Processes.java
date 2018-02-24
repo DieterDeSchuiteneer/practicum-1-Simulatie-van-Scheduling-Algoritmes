@@ -15,12 +15,17 @@ public class Processes {
     }
 
     public List<Process> getSortedByArrivalProcessList() {
-        Collections.sort(processList, (a, b) -> a.getArrivalTime() < b.getArrivalTime() ? -1 : a.getArrivalTime() == b.getArrivalTime() ? 0 : 1);
+        Collections.sort(processList, Comparator.comparing(Process::getArrivalTime);
         return processList;
     }
 
     public List<Process> getSortedByWaitTimeProcessList() {
-        Collections.sort(processList, (a, b) -> a.getWaitTime() < b.getWaitTime() ? -1 : a.getWaitTime() == b.getWaitTime() ? 0 : 1);
+        Collections.sort(processList, Comparator.comparing(Process::getWaitTime));
+        return processList;
+    }
+
+    public List<Process> getSortedByServiceTimeProcessList() {
+        Collections.sort(processList, Comparator.comparing(Process::getServiceTime));
         return processList;
     }
 

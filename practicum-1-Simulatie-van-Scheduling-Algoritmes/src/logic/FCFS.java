@@ -16,7 +16,5 @@ public class FCFS {
                 process.setEndTime(previousEndTime + process.getServiceTime());
             previousEndTime = process.getEndTime();
         }
-
     }
-
 }

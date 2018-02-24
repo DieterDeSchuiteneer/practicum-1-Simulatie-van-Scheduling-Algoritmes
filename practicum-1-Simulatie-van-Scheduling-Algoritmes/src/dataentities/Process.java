@@ -45,15 +45,7 @@ public class Process {
         this.ntat = this.tat / this.serviceTime;
     }
 
-    private void setWaitTime() {
 
-    }
-
-    private void setTat() {
-    }
-
-    private void setNtat() {
-    }
 
     public int getWaitTime() {
         return waitTime;

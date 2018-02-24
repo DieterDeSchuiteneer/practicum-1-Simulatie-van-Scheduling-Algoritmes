@@ -4,6 +4,12 @@ package logic;
 import dataentities.Process;
 import dataentities.Processes;
 import io.XMLReader;
+import org.jfree.data.xy.XYSeries;
+
+import java.util.Comparator;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.concurrent.Callable;
 
 //General logic to coordinate the GUI and the rest of the functionality
 public class Logic {
@@ -38,14 +44,61 @@ public class Logic {
         calculateAverages(processes);
 
         //DEBUGPRINT
-        processes.getSortedByArrivalProcessList().forEach(p-> System.out.println(p.toString()));
+        processes.getSortedByArrivalProcessList().forEach(p -> System.out.println(p.toString()));
         System.out.println(processes.toString());
     }
 
 
-    public void calculateAverages(Processes preocesses) {
-        preocesses.averageWaitTime = preocesses.getSortedByArrivalProcessList().stream().map(Process::getWaitTime).mapToInt(i -> i).sum()/preocesses.getSortedByArrivalProcessList().size();
-        preocesses.averageTat = preocesses.getSortedByArrivalProcessList().stream().map(Process::getTat).mapToDouble(i -> i).sum()/preocesses.getSortedByArrivalProcessList().size();
-        preocesses.averageNtat = preocesses.getSortedByArrivalProcessList().stream().map(Process::getNtat).mapToDouble(i -> i).sum()/preocesses.getSortedByArrivalProcessList().size();
+    public void calculateAverages(Processes precesses) {
+        precesses.averageWaitTime = precesses.getSortedByArrivalProcessList().stream().map(Process::getWaitTime).mapToInt(i -> i).sum() / precesses.getSortedByArrivalProcessList().size();
+        precesses.averageTat = precesses.getSortedByArrivalProcessList().stream().map(Process::getTat).mapToDouble(i -> i).sum() / precesses.getSortedByArrivalProcessList().size();
+        precesses.averageNtat = precesses.getSortedByArrivalProcessList().stream().map(Process::getNtat).mapToDouble(i -> i).sum() / precesses.getSortedByArrivalProcessList().size();
+    }
+
+    //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+    /**
+     * Creats a XYSerie set for usage in the graphs
+     * @param processes the processes on witch is used
+     * @param algorithm the algorithm which is used
+     * @param waitTime if true it returns waitTime els it returns serviceTime
+     * @return XYSerie used in the graph
+     */
+    private XYSeries waitTimePercentile(Processes processes, String algorithm, boolean waitTime) {
+        //add average waitTime per percentile to a XYdataset
+        List processList = processes.getSortedByServiceTimeProcessList();
+        List<List<Process>> partitionedList = percentilePartitionList(processList);
+        XYSeries serie = new XYSeries("WaitTime " + algorithm);
+
+        for (List<Process> percentile : partitionedList) {
+            int averageWaitTime = percentile.stream().map(Process::getWaitTime).mapToInt(i -> i).sum() / percentile.size();
+            int averageTime = 0;
+
+            if (waitTime)
+                averageTime = percentile.stream().map(Process::getServiceTime).mapToInt(i -> i).sum() / percentile.size();
+            else
+                averageTime = percentile.stream().map(Process::getServiceTime).mapToInt(i -> i).sum() / percentile.size();
+
+            serie.add(averageWaitTime, averageTime);
+        }
+
+        return serie;
+    }
+
+    /**
+     * Devides a list in sublist used for percentile calculation
+     * @param processList The list which needs to be divided
+     * @return the divided list
+     */
+   private List<List<Process>> percentilePartitionList(List<Process> processList) {
+        int partitionSize = processList.size() / 100;
+        List<List<Process>> partitions = new LinkedList<List<Process>>();
+        for (int i = 0; i < processList.size(); i += partitionSize) {
+            partitions.add(processList.subList(i,
+                    Math.min(i + partitionSize, processList.size())));
+        }
+
+        return partitions;
+
     }
 }
