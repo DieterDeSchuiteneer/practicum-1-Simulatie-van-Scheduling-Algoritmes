@@ -17,7 +17,10 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="273">
               <caret line="13" column="21" lean-forward="false" selection-start-line="13" selection-start-column="15" selection-end-line="13" selection-end-column="21" />
-              <folding />
+              <folding>
+                <element signature="e#280#281#0" expanded="true" />
+                <element signature="e#306#307#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -32,7 +35,7 @@
       <file leaf-file-name="GUI.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/gui/GUI.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="987">
+            <state relative-caret-position="886">
               <caret line="69" column="39" lean-forward="false" selection-start-line="69" selection-start-column="39" selection-end-line="69" selection-end-column="39" />
               <folding />
             </state>
@@ -42,8 +45,8 @@
       <file leaf-file-name="Processes.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/dataentities/Processes.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="273">
-              <caret line="18" column="84" lean-forward="false" selection-start-line="18" selection-start-column="84" selection-end-line="18" selection-end-column="84" />
+            <state relative-caret-position="546">
+              <caret line="28" column="83" lean-forward="true" selection-start-line="28" selection-start-column="38" selection-end-line="28" selection-end-column="83" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -51,11 +54,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Logic.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Logic.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/logic/Logic.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="840">
-              <caret line="56" column="47" lean-forward="false" selection-start-line="56" selection-start-column="47" selection-end-line="56" selection-end-column="47" />
+              <caret line="112" column="17" lean-forward="false" selection-start-line="112" selection-start-column="11" selection-end-line="112" selection-end-column="17" />
               <folding>
                 <element signature="docComment;method#waitTimePercentile#0;class#Logic#0" expanded="false" />
                 <element signature="docComment;method#percentilePartitionList#0;class#Logic#0" expanded="false" />
@@ -64,14 +67,12 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Algorithms.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Algorithms.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/logic/Algorithms.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="336">
-              <caret line="16" column="16" lean-forward="false" selection-start-line="16" selection-start-column="16" selection-end-line="16" selection-end-column="16" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state relative-caret-position="105">
+              <caret line="7" column="0" lean-forward="true" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -114,8 +115,8 @@
         <option value="$PROJECT_DIR$/src/dataentities/Process.java" />
         <option value="$PROJECT_DIR$/src/dataentities/Processes.java" />
         <option value="$PROJECT_DIR$/src/gui/GUI.form" />
-        <option value="$PROJECT_DIR$/src/logic/Algorithms.java" />
         <option value="$PROJECT_DIR$/src/logic/Logic.java" />
+        <option value="$PROJECT_DIR$/src/logic/Algorithms.java" />
       </list>
     </option>
   </component>
@@ -169,6 +170,13 @@
               <item name="practicum-1-Simulatie-van-Scheduling-Algoritmes" type="462c0819:PsiDirectoryNode" />
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="gui" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="practicum-1-Simulatie-van-Scheduling-Algoritmes" type="b2602c69:ProjectViewProjectNode" />
+              <item name="practicum-1-Simulatie-van-Scheduling-Algoritmes" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="gui" type="462c0819:PsiDirectoryNode" />
+              <item name="GUI" type="e9f4de52:FormNode" />
             </path>
             <path>
               <item name="practicum-1-Simulatie-van-Scheduling-Algoritmes" type="b2602c69:ProjectViewProjectNode" />
@@ -336,12 +344,12 @@
       <workItem from="1519406654464" duration="4447000" />
       <workItem from="1519465305064" duration="4676000" />
       <workItem from="1519470008654" duration="4731000" />
-      <workItem from="1519490113106" duration="230000" />
+      <workItem from="1519490113106" duration="5662000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="23197000" />
+    <option name="totallyTimeSpent" value="28629000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-9" y="-9" width="3858" height="2140" extended-state="6" />
@@ -391,7 +399,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="273">
           <caret line="13" column="21" lean-forward="false" selection-start-line="13" selection-start-column="15" selection-end-line="13" selection-end-column="21" />
-          <folding />
+          <folding>
+            <element signature="e#280#281#0" expanded="true" />
+            <element signature="e#306#307#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -443,9 +454,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="105">
           <caret line="5" column="12" lean-forward="true" selection-start-line="5" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -453,7 +462,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="777">
           <caret line="47" column="0" lean-forward="true" selection-start-line="47" selection-start-column="0" selection-end-line="47" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="e#280#281#0" expanded="true" />
+            <element signature="e#306#307#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -485,9 +497,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="336">
           <caret line="18" column="5" lean-forward="false" selection-start-line="18" selection-start-column="5" selection-end-line="18" selection-end-column="5" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+          <folding />
         </state>
       </provider>
     </entry>
@@ -515,7 +525,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="525">
           <caret line="31" column="28" lean-forward="false" selection-start-line="31" selection-start-column="28" selection-end-line="31" selection-end-column="28" />
-          <folding />
+          <folding>
+            <element signature="e#280#281#0" expanded="true" />
+            <element signature="e#306#307#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -568,7 +581,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="525">
           <caret line="27" column="0" lean-forward="false" selection-start-line="27" selection-start-column="0" selection-end-line="27" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="e#280#281#0" expanded="true" />
+            <element signature="e#306#307#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -620,7 +636,10 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
+          <folding>
+            <element signature="e#280#281#0" expanded="true" />
+            <element signature="e#306#307#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -682,17 +701,20 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/logic/FCFS.java" />
-    <entry file="file://$PROJECT_DIR$/src/dataentities/Process.java">
+    <entry file="file://$PROJECT_DIR$/src/logic/Logic.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="273">
-          <caret line="13" column="21" lean-forward="false" selection-start-line="13" selection-start-column="15" selection-end-line="13" selection-end-column="21" />
-          <folding />
+        <state relative-caret-position="840">
+          <caret line="112" column="17" lean-forward="false" selection-start-line="112" selection-start-column="11" selection-end-line="112" selection-end-column="17" />
+          <folding>
+            <element signature="docComment;method#waitTimePercentile#0;class#Logic#0" expanded="false" />
+            <element signature="docComment;method#percentilePartitionList#0;class#Logic#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/gui/GUI.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="987">
+        <state relative-caret-position="886">
           <caret line="69" column="39" lean-forward="false" selection-start-line="69" selection-start-column="39" selection-end-line="69" selection-end-column="39" />
           <folding />
         </state>
@@ -703,10 +725,21 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/dataentities/Processes.java">
+    <entry file="file://$PROJECT_DIR$/src/dataentities/Process.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="273">
-          <caret line="18" column="84" lean-forward="false" selection-start-line="18" selection-start-column="84" selection-end-line="18" selection-end-column="84" />
+          <caret line="13" column="21" lean-forward="false" selection-start-line="13" selection-start-column="15" selection-end-line="13" selection-end-column="21" />
+          <folding>
+            <element signature="e#280#281#0" expanded="true" />
+            <element signature="e#306#307#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/dataentities/Processes.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="546">
+          <caret line="28" column="83" lean-forward="true" selection-start-line="28" selection-start-column="38" selection-end-line="28" selection-end-column="83" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -715,22 +748,9 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/logic/Algorithms.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="336">
-          <caret line="16" column="16" lean-forward="false" selection-start-line="16" selection-start-column="16" selection-end-line="16" selection-end-column="16" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/logic/Logic.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="840">
-          <caret line="56" column="47" lean-forward="false" selection-start-line="56" selection-start-column="47" selection-end-line="56" selection-end-column="47" />
-          <folding>
-            <element signature="docComment;method#waitTimePercentile#0;class#Logic#0" expanded="false" />
-            <element signature="docComment;method#percentilePartitionList#0;class#Logic#0" expanded="false" />
-          </folding>
+        <state relative-caret-position="105">
+          <caret line="7" column="0" lean-forward="true" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
