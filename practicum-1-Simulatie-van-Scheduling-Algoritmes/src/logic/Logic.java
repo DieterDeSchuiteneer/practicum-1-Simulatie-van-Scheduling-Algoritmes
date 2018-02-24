@@ -54,10 +54,10 @@ public class Logic {
     }
 
 
-    public void calculateAverages(Processes precesses) {
-        precesses.averageWaitTime = precesses.getSortedByArrivalProcessList().stream().map(Process::getWaitTime).mapToInt(i -> i).sum() / precesses.getSortedByArrivalProcessList().size();
-        precesses.averageTat = precesses.getSortedByArrivalProcessList().stream().map(Process::getTat).mapToDouble(i -> i).sum() / precesses.getSortedByArrivalProcessList().size();
-        precesses.averageNtat = precesses.getSortedByArrivalProcessList().stream().map(Process::getNtat).mapToDouble(i -> i).sum() / precesses.getSortedByArrivalProcessList().size();
+    public void calculateAverages(Processes processes) {
+        processes.averageWaitTime = processes.getSortedByArrivalProcessList().stream().map(Process::getWaitTime).mapToInt(i -> i).sum() / processes.getSortedByArrivalProcessList().size();
+        processes.averageTat = processes.getSortedByArrivalProcessList().stream().map(Process::getTat).mapToDouble(i -> i).sum() / processes.getSortedByArrivalProcessList().size();
+        processes.averageNtat = processes.getSortedByArrivalProcessList().stream().map(Process::getNtat).mapToDouble(i -> i).sum() / processes.getSortedByArrivalProcessList().size();
     }
 
     //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
