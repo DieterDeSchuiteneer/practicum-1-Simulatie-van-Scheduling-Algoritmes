@@ -14,6 +14,7 @@ public class GUI extends JDialog {
     private JButton buttonFileOpen;
     private JLabel textFieldFile;
     private JPanel graph1JPanel;
+    private JPanel graph2JPanel;
 
 
     public GUI() {
