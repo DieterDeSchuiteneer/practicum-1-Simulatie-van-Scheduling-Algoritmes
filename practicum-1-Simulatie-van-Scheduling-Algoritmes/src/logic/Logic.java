@@ -6,6 +6,10 @@ import dataentities.Processes;
 import io.XMLReader;
 import org.jfree.data.xy.XYSeries;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.Comparator;
 import java.util.LinkedList;
 import java.util.List;
@@ -38,9 +42,10 @@ public class Logic {
 
     public void execute(String type) {
         Processes processes = io.readXMLFile(this.file);
-        //Static FCFS algorithm
-        FCFS fcfs = new FCFS();
-        fcfs.executeFCFS(processes.getSortedByArrivalProcessList());
+
+        //FCFS algorithm
+        Algorithms algoritmhs = new Algorithms();
+        algoritmhs.executeFCFS(processes.getSortedByArrivalProcessList());
         calculateAverages(processes);
 
         //DEBUGPRINT
@@ -59,9 +64,10 @@ public class Logic {
 
     /**
      * Creats a XYSerie set for usage in the graphs
+     *
      * @param processes the processes on witch is used
      * @param algorithm the algorithm which is used
-     * @param waitTime if true it returns waitTime els it returns serviceTime
+     * @param waitTime  if true it returns waitTime els it returns serviceTime
      * @return XYSerie used in the graph
      */
     private XYSeries waitTimePercentile(Processes processes, String algorithm, boolean waitTime) {
@@ -87,10 +93,11 @@ public class Logic {
 
     /**
      * Devides a list in sublist used for percentile calculation
+     *
      * @param processList The list which needs to be divided
      * @return the divided list
      */
-   private List<List<Process>> percentilePartitionList(List<Process> processList) {
+    private List<List<Process>> percentilePartitionList(List<Process> processList) {
         int partitionSize = processList.size() / 100;
         List<List<Process>> partitions = new LinkedList<List<Process>>();
         for (int i = 0; i < processList.size(); i += partitionSize) {
@@ -100,5 +107,20 @@ public class Logic {
 
         return partitions;
 
+    }
+
+
+    public static Object deepClone(Object object) {
+        try {
+            ByteArrayOutputStream baos = new ByteArrayOutputStream();
+            ObjectOutputStream oos = new ObjectOutputStream(baos);
+            oos.writeObject(object);
+            ByteArrayInputStream bais = new ByteArrayInputStream(baos.toByteArray());
+            ObjectInputStream ois = new ObjectInputStream(bais);
+            return ois.readObject();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 }

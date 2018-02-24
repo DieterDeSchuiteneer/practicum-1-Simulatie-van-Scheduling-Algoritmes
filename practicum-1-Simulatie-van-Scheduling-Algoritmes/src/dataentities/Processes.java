@@ -1,8 +1,9 @@
 package dataentities;
 
-import java.util.*;
-import java.util.stream.Collector;
-import java.util.stream.Collectors;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.LinkedList;
+import java.util.List;
 
 public class Processes {
     List<Process> processList;
@@ -15,7 +16,7 @@ public class Processes {
     }
 
     public List<Process> getSortedByArrivalProcessList() {
-        Collections.sort(processList, Comparator.comparing(Process::getArrivalTime);
+        Collections.sort(processList, Comparator.comparing(Process::getArrivalTime));
         return processList;
     }
 
