@@ -13,7 +13,6 @@ public class GUI extends JDialog {
     private JButton buttonCancel;
     private JButton buttonFileOpen;
     private JLabel textFieldFile;
-    private JPanel graph2JPanel;
     private JPanel graph1JPanel;
 
 
