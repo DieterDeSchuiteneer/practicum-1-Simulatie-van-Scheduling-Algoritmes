@@ -5,11 +5,19 @@ public class Process {
     private int arrivalTime;
     private int serviceTime;
     private int startTime;
+    private int remainingTime;
     private int endTime;
     private int waitTime;
-    private double  tat;
-    private double  ntat;
+    private double tat;
+    private double ntat;
 
+    public int getRemainingTime() {
+        return remainingTime;
+    }
+
+    public void setRemainingTime(int remainingTime) {
+        this.remainingTime = remainingTime;
+    }
 
     public int getPid() {
         return pid;
@@ -46,7 +54,6 @@ public class Process {
     }
 
 
-
     public int getWaitTime() {
         return waitTime;
     }
@@ -57,6 +64,6 @@ public class Process {
 
     @Override
     public String toString() {
-        return "<PID>"+  pid+ ":\t Arrival: "+ arrivalTime + "\t Start: "+ startTime + "\t endTime: " + endTime + "\t serviceTime: " + serviceTime;
+        return "<PID>" + pid + ":\t Arrival: " + arrivalTime + "\t Start: " + startTime + "\t endTime: " + endTime + "\t serviceTime: " + serviceTime;
     }
 }
