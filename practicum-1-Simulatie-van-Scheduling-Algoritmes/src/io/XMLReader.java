@@ -35,9 +35,10 @@ public class XMLReader {
                 if (nNode.getNodeType() == Node.ELEMENT_NODE) {
 
                     Element eElement = (Element) nNode;
-                    int pid = Integer.parseInt(eElement.getElementsByTagName("pid").item(0).getTextContent());
-                    int arrivaltime = Integer.parseInt(eElement.getElementsByTagName("arrivaltime").item(0).getTextContent());
-                    int servicetime = Integer.parseInt(eElement.getElementsByTagName("servicetime").item(0).getTextContent());
+
+                    int pid = Integer.parseInt(getTagValue("pid", eElement));
+                    int arrivaltime = Integer.parseInt(getTagValue("arrivaltime", eElement));
+                    int servicetime = Integer.parseInt(getTagValue("servicetime", eElement));
                     Process tempProcess = new Process(pid, arrivaltime, servicetime);
                     processes.addProcess(tempProcess);
                 }
@@ -48,6 +49,13 @@ public class XMLReader {
 
 
         return processes;
+    }
+
+
+    private static String getTagValue(String tag, Element element) {
+        NodeList nodeList = element.getElementsByTagName(tag).item(0).getChildNodes();
+        Node node = (Node) nodeList.item(0);
+        return node.getNodeValue();
     }
 
 }
