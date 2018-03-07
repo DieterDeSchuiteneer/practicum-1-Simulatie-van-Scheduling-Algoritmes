@@ -120,9 +120,10 @@ public class Logic {
 
     public XYSeries[] getXYSeriesWaitTimeRR(Processes processes) {
         XYSeries[] arrayXYSerie = new XYSeries[2];
-        Processes executedProcesses = algorithms.executeRR(processes.getSortedByWaitTimeProcessList(), 2);
+        Processes executedProcesses = algorithms.newRR(processes.getSortedByWaitTimeProcessList(), 2);
         arrayXYSerie[0] = waitTimePercentile(executedProcesses, "RR", "WaitTime");
         arrayXYSerie[1] = waitTimePercentile(executedProcesses, "RR", "ServiceTime");
+        executedProcesses.getSortedByArrivalProcessList().forEach(p -> System.out.println(p.toString()));
         return arrayXYSerie;
     }
 
@@ -140,7 +141,6 @@ public class Logic {
         Processes executedProcesses = algorithms.executeMLFM(processes.getSortedByWaitTimeProcessList(), queueLength);
         arrayXYSerie[0] = waitTimePercentile(executedProcesses, "MLFM", "WaitTime");
         arrayXYSerie[1] = waitTimePercentile(executedProcesses, "MLFM", "ServiceTime");
-        executedProcesses.getSortedByArrivalProcessList().forEach(p -> System.out.println(p.toString()));
         return arrayXYSerie;
     }
 

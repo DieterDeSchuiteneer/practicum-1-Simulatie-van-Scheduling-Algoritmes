@@ -115,6 +115,57 @@ public class Algorithms {
         return new Processes(completedProcessList);
     }
 
+    public Processes newRR(List<Process> processList,int timeSlice) {
+        Queue<Process> RRProcessQueue = new LinkedList<>();
+        List<Process> completedProcessList = new LinkedList<>();
+        Process currentProcess = null;
+
+        RRProcessQueue.add(processList.get(0));
+        int clock = processList.get(0).getArrivalTime();
+        processList.remove(0);
+
+        while(!processList.isEmpty() || !RRProcessQueue.isEmpty() ) {
+            if (!RRProcessQueue.isEmpty())
+                currentProcess = RRProcessQueue.remove();
+            else {
+                if(processList.isEmpty()) break;
+                else {
+                    System.out.println("no process in queue");
+                    RRProcessQueue.add(processList.get(0));
+                    clock = processList.get(0).getArrivalTime();
+                    processList.remove(0);
+                }
+            }
+
+            if(currentProcess.getRemainingTime() <= timeSlice) {
+                clock += currentProcess.getRemainingTime();
+                currentProcess.setEndTime(clock);
+                completedProcessList.add(currentProcess);
+                int finalClock = clock;
+                if(!processList.isEmpty()) {
+                    List temp = processList.stream().filter(p -> p.getArrivalTime() <= finalClock).collect(Collectors.toList());
+                    RRProcessQueue.addAll(temp);
+                    processList.removeAll(temp);
+                }
+
+            }else {
+                clock += timeSlice;
+                int finalClock = clock;
+                if(!processList.isEmpty()) {
+                    List temp = processList.stream().filter(p -> p.getArrivalTime() <= finalClock).collect(Collectors.toList());
+                    RRProcessQueue.addAll(temp);
+                    processList.removeAll(temp);
+                }
+                currentProcess.setRemainingTime(currentProcess.getRemainingTime()-timeSlice);
+                RRProcessQueue.add(currentProcess);
+            }
+        }
+
+        return new Processes(completedProcessList);
+    }
+
+
+
     /**
      * the process with the smallest amount of time remaining until completion is selected to execute
      *

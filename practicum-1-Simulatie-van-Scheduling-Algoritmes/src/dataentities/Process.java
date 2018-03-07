@@ -35,6 +35,7 @@ public class Process implements java.io.Serializable {
         this.pid = pid;
         this.arrivalTime = arrivalTime;
         this.serviceTime = serviceTime;
+        this.remainingTime = serviceTime;
     }
 
     public double getTat() {
