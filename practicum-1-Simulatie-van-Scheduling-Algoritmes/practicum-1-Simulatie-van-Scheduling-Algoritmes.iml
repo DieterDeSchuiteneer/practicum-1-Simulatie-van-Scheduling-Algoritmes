@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" inherit-compiler-output="true">
+    <exclude-output />
+    <content url="file://$MODULE_DIR$">
+      <sourceFolder url="file://$MODULE_DIR$/src" isTestSource="false" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="lib" level="project" />
+    <orderEntry type="module" module-name="lib" />
+    <orderEntry type="library" name="jcommon-1.0.23" level="project" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$USER_HOME$/OneDrive/Documenten/practicum-1-Simulatie-van-Scheduling-Algoritmes-master/jfreechart-1.0.13.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$USER_HOME$/OneDrive/Documenten/practicum-1-Simulatie-van-Scheduling-Algoritmes-master/practicum-1-Simulatie-van-Scheduling-Algoritmes/lib/jfreechart-1.0.1/jfreechart-1.0.13.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$USER_HOME$/OneDrive/Documenten/practicum-1-Simulatie-van-Scheduling-Algoritmes-master/practicum-1-Simulatie-van-Scheduling-Algoritmes/lib/jfreechart-1.0.1/jfreechart-1.0.13_2.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="library" name="jfreechart-1.0.19 (2)" level="project" />
+    <orderEntry type="library" name="jfreechart-1.5.0 (2)" level="project" />
+    <orderEntry type="library" name="jcommon-1.0.23 (4)" level="project" />
+  </component>
+</module>
