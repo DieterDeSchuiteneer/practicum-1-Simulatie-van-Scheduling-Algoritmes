@@ -11,17 +11,10 @@ public class Process implements java.io.Serializable {
     private double tat;
     private double ntat;
 
-    public int getRemainingTime() {
-        return remainingTime;
-    }
-
     public void setRemainingTime(int remainingTime) {
         this.remainingTime = remainingTime;
     }
-
-    public int getPid() {
-        return pid;
-    }
+    public void setStartTime(int startTime) { this.startTime = startTime; }
 
     public int getArrivalTime() {
         return arrivalTime;
@@ -29,6 +22,10 @@ public class Process implements java.io.Serializable {
 
     public int getServiceTime() {
         return serviceTime;
+    }
+
+    public int getRemainingTime() {
+        return remainingTime;
     }
 
     public Process(int pid, int arrivalTime, int serviceTime) {
@@ -48,7 +45,6 @@ public class Process implements java.io.Serializable {
 
     public void setEndTime(int endTime) {
         this.endTime = endTime;
-        this.startTime = endTime - this.serviceTime;
         this.waitTime = this.startTime - this.arrivalTime;
         this.tat = this.serviceTime + this.waitTime;
         this.ntat = this.tat / this.serviceTime;

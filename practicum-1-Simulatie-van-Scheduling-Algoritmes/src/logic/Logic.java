@@ -56,30 +56,30 @@ public class Logic {
         int[] queueLengthMlfb = new int[]{1, 2, 4, 8};
         int[] queueLengthMlfb2 = new int[]{1, 2, 3, 4};
         //WaitTime
-        XYSeries[] FCFS = getXYSeriesWaitTimeFCFS( (Processes) deepClone(processes));
-        XYSeries[] SJF = getXYSeriesWaitTimeSJF((Processes) deepClone(processes));
-        XYSeries[] RR = getXYSeriesWaitTimeRR((Processes) deepClone(processes));
-        XYSeries[] SRTF = getXYSeriesWaitTimeSRTF((Processes) deepClone(processes));
-        XYSeries[] MLFM = getXYSeriesWaitTimeMLFM((Processes) deepClone(processes),queueLengthMlfb);
-        XYSeries[] HRRN = getXYSeriesWaitTimeHRRN((Processes) deepClone(processes));
+        XYSeries[] FCFS = getXYSeriesWaitTimeFCFS( (Processes) deepClone(processes)); //WERKT
+        XYSeries[] SJF = getXYSeriesWaitTimeSJF((Processes) deepClone(processes)); //WERKT
+        XYSeries[] RR = getXYSeriesWaitTimeRR((Processes) deepClone(processes));//WERKT
+//        XYSeries[] SRTF = getXYSeriesWaitTimeSRTF((Processes) deepClone(processes)); //NOPE
+        XYSeries[] MLFM = getXYSeriesWaitTimeMLFM((Processes) deepClone(processes),queueLengthMlfb);//WERKT
+//        XYSeries[] HRRN = getXYSeriesWaitTimeHRRN((Processes) deepClone(processes)); //NOPE
 
         //Waittime
         dataset = new XYSeriesCollection();
-        dataset.addSeries(FCFS[0]);
-        dataset.addSeries(SJF[0]);
-        dataset.addSeries(RR[0]);
-        dataset.addSeries(SRTF[0]);
-        dataset.addSeries(MLFM[0]);
-        dataset.addSeries(HRRN[0]);
+        dataset.addSeries(FCFS[0]); //WERKT
+        dataset.addSeries(SJF[0]); //WERKT
+        dataset.addSeries(RR[0]); //WERKT
+//        dataset.addSeries(SRTF[0]); //NOPE
+        dataset.addSeries(MLFM[0]); //WERKT
+//        dataset.addSeries(HRRN[0]); //NOPE
 
         //ServiceTime
         dataset2 = new XYSeriesCollection();
-        dataset2.addSeries(FCFS[1]);
-        dataset2.addSeries(SJF[1]);
-        dataset2.addSeries(RR[1]);
-        dataset2.addSeries(SRTF[1]);
-        dataset2.addSeries(MLFM[1]);
-        dataset2.addSeries(HRRN[1]);
+        dataset2.addSeries(FCFS[1]); //WERKT
+        dataset2.addSeries(SJF[1]); //WERKT
+        dataset2.addSeries(RR[1]);//WERKT
+//        dataset2.addSeries(SRTF[1]); //NOPE
+        dataset2.addSeries(MLFM[1]); //WERKT
+//        dataset2.addSeries(HRRN[1]); //NOPE
 
         //calculateAverages(processes);
 
@@ -88,7 +88,7 @@ public class Logic {
         globalWaittime.Make();
 
         //Make line graph with XYdataset...
-        FreeChartGraph globalServiceTime= new FreeChartGraph( "ServiceTime",dataset2,graph2JPanel);
+        FreeChartGraph globalServiceTime= new FreeChartGraph( "NTAT",dataset2,graph2JPanel);
         globalServiceTime.Make();
 
     }
@@ -107,6 +107,7 @@ public class Logic {
         Processes executedProcesses = algorithms.executeFCFS(processes.getSortedByWaitTimeProcessList());
         arrayXYSerie[0] = waitTimePercentile(executedProcesses, "FCFS", "WaitTime");
         arrayXYSerie[1] = waitTimePercentile(executedProcesses, "FCFS", "ServiceTime");
+//        executedProcesses.getSortedByArrivalProcessList().forEach(p -> System.out.println(p.toString()));
         return arrayXYSerie;
     }
 
@@ -115,15 +116,16 @@ public class Logic {
         Processes executedProcesses = algorithms.executeSJF(processes.getSortedByWaitTimeProcessList());
         arrayXYSerie[0] = waitTimePercentile(executedProcesses, "SJF", "WaitTime");
         arrayXYSerie[1] = waitTimePercentile(executedProcesses, "SJF", "ServiceTime");
+//        executedProcesses.getSortedByArrivalProcessList().forEach(p -> System.out.println(p.toString()));
         return arrayXYSerie;
     }
 
     public XYSeries[] getXYSeriesWaitTimeRR(Processes processes) {
         XYSeries[] arrayXYSerie = new XYSeries[2];
-        Processes executedProcesses = algorithms.newRR(processes.getSortedByWaitTimeProcessList(), 2);
+        Processes executedProcesses = algorithms.executeRR(processes.getSortedByWaitTimeProcessList(), 2);
         arrayXYSerie[0] = waitTimePercentile(executedProcesses, "RR", "WaitTime");
         arrayXYSerie[1] = waitTimePercentile(executedProcesses, "RR", "ServiceTime");
-        executedProcesses.getSortedByArrivalProcessList().forEach(p -> System.out.println(p.toString()));
+//        executedProcesses.getSortedByArrivalProcessList().forEach(p -> System.out.println(p.toString()));
         return arrayXYSerie;
     }
 
@@ -132,15 +134,17 @@ public class Logic {
         Processes executedProcesses = algorithms.executeSRTF(processes.getSortedByWaitTimeProcessList());
         arrayXYSerie[0] = waitTimePercentile(executedProcesses, "SRTF", "WaitTime");
         arrayXYSerie[1] = waitTimePercentile(executedProcesses, "SRTF", "ServiceTime");
+        executedProcesses.getSortedByArrivalProcessList().forEach(p -> System.out.println(p.toString()));
         return arrayXYSerie;
     }
 
 
     public XYSeries[] getXYSeriesWaitTimeMLFM(Processes processes,int[] queueLength) {
         XYSeries[] arrayXYSerie = new XYSeries[2];
-        Processes executedProcesses = algorithms.executeMLFM(processes.getSortedByWaitTimeProcessList(), queueLength);
+        Processes executedProcesses = algorithms.executeMLFB(processes.getSortedByWaitTimeProcessList(), queueLength, 8);
         arrayXYSerie[0] = waitTimePercentile(executedProcesses, "MLFM", "WaitTime");
         arrayXYSerie[1] = waitTimePercentile(executedProcesses, "MLFM", "ServiceTime");
+//        executedProcesses.getSortedByArrivalProcessList().forEach(p -> System.out.println(p.toString()));
         return arrayXYSerie;
     }
 
@@ -149,6 +153,7 @@ public class Logic {
         Processes executedProcesses = algorithms.executeHRRN(processes.getSortedByWaitTimeProcessList());
         arrayXYSerie[0] = waitTimePercentile(executedProcesses, "HRRN", "WaitTime");
         arrayXYSerie[1] = waitTimePercentile(executedProcesses, "HRRN", "ServiceTime");
+        executedProcesses.getSortedByArrivalProcessList().forEach(p -> System.out.println(p.toString()));
         return arrayXYSerie;
     }
 
