@@ -47,7 +47,7 @@ public class XMLReader {
             e.printStackTrace();
         }
 
-
+        System.out.println("Done reading");
         return processes;
     }
 

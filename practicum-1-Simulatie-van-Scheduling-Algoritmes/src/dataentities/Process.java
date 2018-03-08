@@ -14,7 +14,7 @@ public class Process implements java.io.Serializable {
     public void setRemainingTime(int remainingTime) {
         this.remainingTime = remainingTime;
     }
-    public void setStartTime(int startTime) { this.startTime = startTime; }
+    public void setStartTime(int startTime) { if(this.startTime == -1) this.startTime = startTime; }
 
     public int getArrivalTime() {
         return arrivalTime;
@@ -28,11 +28,13 @@ public class Process implements java.io.Serializable {
         return remainingTime;
     }
 
+    public int getPid() {return this.pid;}
     public Process(int pid, int arrivalTime, int serviceTime) {
         this.pid = pid;
         this.arrivalTime = arrivalTime;
         this.serviceTime = serviceTime;
         this.remainingTime = serviceTime;
+        this.startTime = -1;
     }
 
     public double getTat() {

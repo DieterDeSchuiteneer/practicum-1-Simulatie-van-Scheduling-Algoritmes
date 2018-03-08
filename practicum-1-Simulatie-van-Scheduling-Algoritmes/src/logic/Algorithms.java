@@ -3,10 +3,7 @@ package logic;
 import dataentities.Process;
 import dataentities.Processes;
 
-import java.util.Comparator;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Queue;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class Algorithms {
@@ -67,56 +64,8 @@ public class Algorithms {
         }
         System.out.println("SJF completed");
         return new Processes(completed);
-
     }
 
-//    // q = 2 or q = 8
-//    public Processes executeRR(List<Process> processList, int q) {
-//
-//        int clock = 0;
-//        Process temp;
-//        List<Process> completedProcessList = new LinkedList<>();
-//        int numberOfProcesses = processList.size();
-//        int remainingTime;
-//        clock = processList.get(0).getArrivalTime();
-//        int pid = 1;
-//        Queue<Process> RR_Queue = new LinkedList<Process>();
-//        RR_Queue.add(processList.get(0));
-//        processList.get(0).setRemainingTime(processList.get(0).getServiceTime());
-//
-//        while (!RR_Queue.isEmpty()) {
-//            temp = RR_Queue.remove();
-//            remainingTime = temp.getRemainingTime();
-//            for (int i = 0; i < q; i++) {
-//                clock = clock + 1;
-//                remainingTime = remainingTime - 1;
-//                temp.setRemainingTime(remainingTime);
-//                if (remainingTime == 0) {
-//                    i = i + q;
-//                    temp.setEndTime(clock);
-//                    completedProcessList.add(temp);
-//                }
-//            }
-//            if (pid < numberOfProcesses) {
-//                if (processList.get(pid).getArrivalTime() <= clock) {
-//                    RR_Queue.add(processList.get(pid));
-//                    processList.get(pid).setRemainingTime(processList.get(pid).getServiceTime());
-//                    pid = pid + 1;
-//                }
-//            }
-//            if (remainingTime > 0) {
-//                RR_Queue.add(temp);
-//            }
-//            if (RR_Queue.isEmpty() && pid < numberOfProcesses) {
-//                RR_Queue.add(processList.get(pid));
-//                processList.get(pid).setRemainingTime(processList.get(pid).getServiceTime());
-//                clock = processList.get(pid).getArrivalTime();
-//                pid = pid + 1;
-//            }
-//        }
-//        System.out.println("RR completed");
-//        return new Processes(completedProcessList);
-//    }
 
     public Processes executeRR(List<Process> processList, int timeSlice) {
         Queue<Process> RRProcessQueue = new LinkedList<>();
@@ -128,43 +77,37 @@ public class Algorithms {
         processList.remove(0);
 
         while (!processList.isEmpty() || !RRProcessQueue.isEmpty()) {
-            if (!RRProcessQueue.isEmpty()) currentProcess = RRProcessQueue.remove();
-
-            else {
-                if (processList.isEmpty()) break;
-                else {
-                    RRProcessQueue.add(processList.get(0));
-                    clock = processList.get(0).getArrivalTime();
-                    processList.remove(0);
-                }
+            if(processList.isEmpty() && RRProcessQueue.isEmpty()) break;
+            if(!RRProcessQueue.isEmpty()) currentProcess = RRProcessQueue.poll();
+            if(!processList.isEmpty() && RRProcessQueue.isEmpty()){
+                clock = processList.get(0).getArrivalTime();
+                RRProcessQueue.add(processList.remove(0));
             }
-
             currentProcess.setStartTime(clock);
 
             if (currentProcess.getRemainingTime() <= timeSlice) {
                 clock += currentProcess.getRemainingTime();
                 currentProcess.setEndTime(clock);
                 completedProcessList.add(currentProcess);
-                int finalClock = clock;
                 if (!processList.isEmpty()) {
-                    List temp = processList.stream().filter(p -> p.getArrivalTime() <= finalClock).collect(Collectors.toList());
-                    RRProcessQueue.addAll(temp);
+                    int finalClock = clock;
+                    List<Process> temp = processList.stream().filter(p -> p.getArrivalTime() <= finalClock).collect(Collectors.toList());
+                    for(Process p:temp) {RRProcessQueue.add(p);}
                     processList.removeAll(temp);
                 }
-
             } else {
                 clock += timeSlice;
                 int finalClock = clock;
+                currentProcess.setRemainingTime(currentProcess.getRemainingTime() - timeSlice);
                 if (!processList.isEmpty()) {
-                    List temp = processList.stream().filter(p -> p.getArrivalTime() <= finalClock).collect(Collectors.toList());
-                    RRProcessQueue.addAll(temp);
+                    List<Process> temp = processList.stream().filter(p -> p.getArrivalTime() <= finalClock).collect(Collectors.toList());
+                    for(Process p:temp) {RRProcessQueue.add(p);}
                     processList.removeAll(temp);
                 }
-                currentProcess.setRemainingTime(currentProcess.getRemainingTime() - timeSlice);
                 RRProcessQueue.add(currentProcess);
             }
         }
-
+        System.out.println("RR Completed");
         return new Processes(completedProcessList);
     }
 
@@ -178,58 +121,51 @@ public class Algorithms {
     public Processes executeSRTF(List<Process> processList) {
         List<Process> completed = new LinkedList<>();
         List<Process> arrivedProcessesList = new LinkedList<>();
-        Process currentProcess = null;
-        int counter = 0;
+        Process currentProcess = processList.remove(0);
+        int counter = currentProcess.getArrivalTime();
 
         while (!arrivedProcessesList.isEmpty() || !processList.isEmpty()) {
-            if (counter == processList.get(0).getArrivalTime()) {
-                //add to arrived Lists
-                arrivedProcessesList.add(processList.get(0));
-                processList.remove(0);
-                currentProcess = evaluate(currentProcess, arrivedProcessesList);
+            //System.out.println(counter);
+            if(arrivedProcessesList.isEmpty() && processList.isEmpty() ) break;
+            if(!processList.isEmpty()) {
+                if (counter == processList.get(0).getArrivalTime()) {
+                    //add to arrived Lists
+                    arrivedProcessesList.add(processList.remove(0));
+                    currentProcess = evaluate(currentProcess, arrivedProcessesList);
+                    currentProcess.setStartTime(counter);
+                }
+            }
+            if(arrivedProcessesList.isEmpty()&& !processList.isEmpty() && currentProcess == null){
+                currentProcess = processList.remove(0);
+                counter = currentProcess.getArrivalTime();
+                currentProcess.setStartTime(counter);
             }
 
             currentProcess.setRemainingTime(currentProcess.getRemainingTime() - 1);
+
             if (currentProcess.getRemainingTime() == 0) {
                 currentProcess.setEndTime(counter);
                 completed.add(currentProcess);
                 currentProcess = evaluate(null, arrivedProcessesList);
+                if(currentProcess != null) currentProcess.setStartTime(counter);
             }
 
 
             counter++;
         }
-        System.out.println("SRTF completed" + completed.size());
+        System.out.println("SRTF completed");
         return new Processes(completed);
     }
 
-    private Process evaluate(Process currenProcess, List<Process> arrivedProcesList) {
-        if (currenProcess != null) {
-            arrivedProcesList.add(currenProcess);
+    private Process evaluate(Process currentProcess, List<Process> arrivedProcessList) {
+        if (currentProcess != null) {
+            arrivedProcessList.add(currentProcess);
         }
-        currenProcess = arrivedProcesList.stream().sorted(Comparator.comparing(Process::getRemainingTime)).findFirst().get();
-        arrivedProcesList.remove(currenProcess);
-        return currenProcess;
+        currentProcess = arrivedProcessList.stream().min(Comparator.comparing(Process::getRemainingTime)).orElse(null);
+        if(currentProcess != null) arrivedProcessList.remove(currentProcess);
+        return currentProcess;
     }
 
-//    public Processes newSRTF(List<Process> processList){
-//        List<Process> compledProcessList = new LinkedList<>();
-//        List<Process> arrivedProcessList = new LinkedList<>();
-//        Process currentProcess = null;
-//
-//        currentProcess = processList.get(0);
-//        processList.remove(currentProcess);
-//        currentProcess.setStartTime(currentProcess.getArrivalTime());
-//        int clock = currentProcess.getArrivalTime();
-//        int nextArrival = processList.get(0).getArrivalTime();
-//
-//        while(!processList.isEmpty() || !arrivedProcessList.isEmpty()) {
-//            if(nextArrival)
-//        }
-//
-//
-//        return new Processes(compledProcessList);
-//    }
 
     public Processes executeMLFB(List<Process> processList, int[] queueLength, int timeSlice) {
         //used variables
@@ -301,52 +237,41 @@ public class Algorithms {
 
 
     public Processes executeHRRN(List<Process> processList) {
-        int clock = 0;
-        Process temp;
         List<Process> completedProcessList = new LinkedList<>();
+        List<Process> arrivedProcessList = new LinkedList<>();
 
-        int numberOfProcesses = processList.size();
-        int pid = 1;
-        clock = processList.get(0).getArrivalTime();
-        Queue<Process> HRRN_Queue = new LinkedList<Process>();
-        HRRN_Queue.add(processList.get(0));
-        double highest_NTAT;
-        Process temp_Highest_NTAT;
-        for (int i = 0; i < numberOfProcesses - 1; i++) {
-            highest_NTAT = Double.MIN_VALUE;
-            temp_Highest_NTAT = null;
-            int n = HRRN_Queue.size();
-            for (int j = 0; j < n; j++) {
-                temp = HRRN_Queue.remove();
-                temp.setEndTime(clock + temp.getServiceTime());
-                completedProcessList.add(temp);
+        Process currenProcess = null;
+        int clock = processList.get(0).getArrivalTime();
+        arrivedProcessList.add(processList.remove(0));
 
-                if (highest_NTAT < temp.getNtat()) {
-                    highest_NTAT = temp.getNtat();
-                    if (temp_Highest_NTAT != null) {
-                        HRRN_Queue.add(temp_Highest_NTAT);
-                        temp_Highest_NTAT = temp;
-                    } else {
-                        temp_Highest_NTAT = temp;
-                    }
-                } else {
-                    HRRN_Queue.add(temp);
-                }
+        while(currenProcess != null || !processList.isEmpty() || !arrivedProcessList.isEmpty()) {
+            //select process with higest NTAT from list
+            if(arrivedProcessList.isEmpty()){
+                if(processList.size() == 0 && arrivedProcessList.isEmpty()) break;
+                currenProcess = processList.remove(0);
+                clock = currenProcess.getArrivalTime();
+                currenProcess.setStartTime(clock);
+            } else {
+                currenProcess = arrivedProcessList.stream().max(Comparator.comparing(Process::getNtat)).get(); //TODO: get the one with the biggest ntat
+                currenProcess.setStartTime(clock);
             }
-            if (temp_Highest_NTAT != null) clock += temp_Highest_NTAT.getServiceTime();
+            arrivedProcessList.remove(currenProcess);
 
+            //Process the current process.
+            clock += currenProcess.getRemainingTime();
+            int finalClock = clock;
+            currenProcess.setEndTime(clock);
+            completedProcessList.add(currenProcess);
 
-            while (processList.get(pid).getArrivalTime() <= clock && pid < numberOfProcesses - 1) {
-                HRRN_Queue.add(processList.get(pid));
-                pid++;
-            }
-            if (HRRN_Queue.isEmpty() && pid < numberOfProcesses - 1) {
-                temp = processList.get(pid);
-                pid++;
-                HRRN_Queue.add(temp);
-                clock = temp.getArrivalTime();
-            }
+            //find all the newly arrived processes.
+            List<Process> newProcessList = processList.stream().filter(p -> p.getArrivalTime() <= finalClock).collect(Collectors.toList());
+            arrivedProcessList.addAll(newProcessList);
+            processList.removeAll(arrivedProcessList);
+            //Recalculate NTAT.
+            arrivedProcessList.forEach(p-> p.setStartTime(finalClock));
+            arrivedProcessList.forEach(p-> p.setEndTime(finalClock + p.getServiceTime()));
         }
+
         System.out.println("HRRN completed");
         return new Processes(completedProcessList);
     }

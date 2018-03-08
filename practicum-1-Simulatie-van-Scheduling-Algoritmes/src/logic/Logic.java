@@ -58,28 +58,31 @@ public class Logic {
         //WaitTime
         XYSeries[] FCFS = getXYSeriesWaitTimeFCFS( (Processes) deepClone(processes)); //WERKT
         XYSeries[] SJF = getXYSeriesWaitTimeSJF((Processes) deepClone(processes)); //WERKT
-        XYSeries[] RR = getXYSeriesWaitTimeRR((Processes) deepClone(processes));//WERKT
-//        XYSeries[] SRTF = getXYSeriesWaitTimeSRTF((Processes) deepClone(processes)); //NOPE
+        XYSeries[] RR2 = getXYSeriesWaitTimeRRTs2((Processes) deepClone(processes));//WERKT
+        XYSeries[] RR8 = getXYSeriesWaitTimeRRTs8((Processes) deepClone(processes));//WERKT
+        XYSeries[] SRTF = getXYSeriesWaitTimeSRTF((Processes) deepClone(processes)); //NOPE
         XYSeries[] MLFM = getXYSeriesWaitTimeMLFM((Processes) deepClone(processes),queueLengthMlfb);//WERKT
-//        XYSeries[] HRRN = getXYSeriesWaitTimeHRRN((Processes) deepClone(processes)); //NOPE
+        XYSeries[] HRRN = getXYSeriesWaitTimeHRRN((Processes) deepClone(processes)); //WERKT
 
         //Waittime
         dataset = new XYSeriesCollection();
         dataset.addSeries(FCFS[0]); //WERKT
         dataset.addSeries(SJF[0]); //WERKT
-        dataset.addSeries(RR[0]); //WERKT
-//        dataset.addSeries(SRTF[0]); //NOPE
+        dataset.addSeries(RR2[0]); //WERKT
+        dataset.addSeries(RR8[0]); //WERKT
+        dataset.addSeries(SRTF[0]); //WERKT?
         dataset.addSeries(MLFM[0]); //WERKT
-//        dataset.addSeries(HRRN[0]); //NOPE
+        dataset.addSeries(HRRN[0]); //WERKT
 
         //ServiceTime
         dataset2 = new XYSeriesCollection();
         dataset2.addSeries(FCFS[1]); //WERKT
         dataset2.addSeries(SJF[1]); //WERKT
-        dataset2.addSeries(RR[1]);//WERKT
-//        dataset2.addSeries(SRTF[1]); //NOPE
+        dataset2.addSeries(RR2[1]);//WERKT
+        dataset2.addSeries(RR8[1]);//WERKT
+        dataset2.addSeries(SRTF[1]); //WERKT?
         dataset2.addSeries(MLFM[1]); //WERKT
-//        dataset2.addSeries(HRRN[1]); //NOPE
+        dataset2.addSeries(HRRN[1]); //WERKT
 
         //calculateAverages(processes);
 
@@ -116,15 +119,24 @@ public class Logic {
         Processes executedProcesses = algorithms.executeSJF(processes.getSortedByWaitTimeProcessList());
         arrayXYSerie[0] = waitTimePercentile(executedProcesses, "SJF", "WaitTime");
         arrayXYSerie[1] = waitTimePercentile(executedProcesses, "SJF", "ServiceTime");
+        executedProcesses.getSortedByArrivalProcessList().forEach(p -> System.out.println(p.toString()));
+        return arrayXYSerie;
+    }
+
+    public XYSeries[] getXYSeriesWaitTimeRRTs2(Processes processes) {
+        XYSeries[] arrayXYSerie = new XYSeries[2];
+        Processes executedProcesses = algorithms.executeRR(processes.getSortedByWaitTimeProcessList(), 2);
+        arrayXYSerie[0] = waitTimePercentile(executedProcesses, "RR ts=2", "WaitTime");
+        arrayXYSerie[1] = waitTimePercentile(executedProcesses, "RR ts=2", "ServiceTime");
 //        executedProcesses.getSortedByArrivalProcessList().forEach(p -> System.out.println(p.toString()));
         return arrayXYSerie;
     }
 
-    public XYSeries[] getXYSeriesWaitTimeRR(Processes processes) {
+    public XYSeries[] getXYSeriesWaitTimeRRTs8(Processes processes) {
         XYSeries[] arrayXYSerie = new XYSeries[2];
-        Processes executedProcesses = algorithms.executeRR(processes.getSortedByWaitTimeProcessList(), 2);
-        arrayXYSerie[0] = waitTimePercentile(executedProcesses, "RR", "WaitTime");
-        arrayXYSerie[1] = waitTimePercentile(executedProcesses, "RR", "ServiceTime");
+        Processes executedProcesses = algorithms.executeRR(processes.getSortedByWaitTimeProcessList(), 8);
+        arrayXYSerie[0] = waitTimePercentile(executedProcesses, "RR ts=8", "WaitTime");
+        arrayXYSerie[1] = waitTimePercentile(executedProcesses, "RR ts=8", "ServiceTime");
 //        executedProcesses.getSortedByArrivalProcessList().forEach(p -> System.out.println(p.toString()));
         return arrayXYSerie;
     }
@@ -134,7 +146,7 @@ public class Logic {
         Processes executedProcesses = algorithms.executeSRTF(processes.getSortedByWaitTimeProcessList());
         arrayXYSerie[0] = waitTimePercentile(executedProcesses, "SRTF", "WaitTime");
         arrayXYSerie[1] = waitTimePercentile(executedProcesses, "SRTF", "ServiceTime");
-        executedProcesses.getSortedByArrivalProcessList().forEach(p -> System.out.println(p.toString()));
+//        executedProcesses.getSortedByArrivalProcessList().forEach(p -> System.out.println(p.toString()));
         return arrayXYSerie;
     }
 
@@ -153,7 +165,7 @@ public class Logic {
         Processes executedProcesses = algorithms.executeHRRN(processes.getSortedByWaitTimeProcessList());
         arrayXYSerie[0] = waitTimePercentile(executedProcesses, "HRRN", "WaitTime");
         arrayXYSerie[1] = waitTimePercentile(executedProcesses, "HRRN", "ServiceTime");
-        executedProcesses.getSortedByArrivalProcessList().forEach(p -> System.out.println(p.toString()));
+//        executedProcesses.getSortedByArrivalProcessList().forEach(p -> System.out.println(p.toString()));
         return arrayXYSerie;
     }
 
@@ -179,7 +191,6 @@ public class Logic {
                 averageTime = percentile.stream().map(Process::getWaitTime).mapToInt(i -> i).sum() / percentile.size();
             else
                 averageTime = (int) percentile.stream().map(Process::getNtat).mapToDouble(i -> i).sum() / percentile.size();
-
             serie.add(averageServiceTime, averageTime);
         }
 
@@ -201,7 +212,6 @@ public class Logic {
         }
 
         return partitions;
-
     }
 
 
