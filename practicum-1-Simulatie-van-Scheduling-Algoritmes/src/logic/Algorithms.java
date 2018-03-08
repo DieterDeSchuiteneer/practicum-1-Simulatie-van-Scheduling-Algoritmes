@@ -111,7 +111,6 @@ public class Algorithms {
         return new Processes(completedProcessList);
     }
 
-
     /**
      * the process with the smallest amount of time remaining until completion is selected to execute
      *

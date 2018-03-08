@@ -119,7 +119,7 @@ public class Logic {
         Processes executedProcesses = algorithms.executeSJF(processes.getSortedByWaitTimeProcessList());
         arrayXYSerie[0] = waitTimePercentile(executedProcesses, "SJF", "WaitTime");
         arrayXYSerie[1] = waitTimePercentile(executedProcesses, "SJF", "ServiceTime");
-        executedProcesses.getSortedByArrivalProcessList().forEach(p -> System.out.println(p.toString()));
+//        executedProcesses.getSortedByArrivalProcessList().forEach(p -> System.out.println(p.toString()));
         return arrayXYSerie;
     }
 
