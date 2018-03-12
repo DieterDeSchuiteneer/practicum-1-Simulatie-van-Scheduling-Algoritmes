@@ -56,16 +56,21 @@ public class FreeChartGraph extends JFrame {
         ));
 
         NumberAxis xAxis = new LogarithmicAxis("Percentile");
-        xAxis.setAutoRangeIncludesZero(true);
         plot.setDomainAxis(xAxis);
-        //NumberAxis yAs = new LogarithmicAxis("NOG INVULLEN "+ title);
-        //plot.setRangeAxis(yAs);
+
+        NumberAxis domain = (NumberAxis) plot.getDomainAxis();
+        domain.setRange(0, 1000);
 
         ChartPanel chartPanel = new ChartPanel(chart);
-        chartPanel.zoomOutBoth(300, 300);
+
         graph1JPanel.removeAll();
-        graph1JPanel.add(chartPanel);
-        graph1JPanel.validate();
+        Dimension panelSize = graph1JPanel.getSize();
+        graph1JPanel.add(chartPanel,BorderLayout.CENTER);
+        chartPanel.setSize(panelSize);
+
+        //chartPanel.zoomOutBoth(300, 300);
+        //graph1JPanel.add(chartPanel);
+        //graph1JPanel.validate();
     }
 
 }

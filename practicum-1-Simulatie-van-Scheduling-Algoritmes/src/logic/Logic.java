@@ -182,7 +182,7 @@ public class Logic {
         List processList = processes.getSortedByServiceTimeProcessList();
         List<List<Process>> partitionedList = percentilePartitionList(processList);
         XYSeries serie = new XYSeries(time + " " + algorithm);
-
+        int counter = 0;
         for (List<Process> percentile : partitionedList) {
             int averageServiceTime = percentile.stream().map(Process::getServiceTime).mapToInt(i -> i).sum() / percentile.size();
             int averageTime = 0;
@@ -191,9 +191,11 @@ public class Logic {
                 averageTime = percentile.stream().map(Process::getWaitTime).mapToInt(i -> i).sum() / percentile.size();
             else
                 averageTime = (int) percentile.stream().map(Process::getNtat).mapToDouble(i -> i).sum() / percentile.size();
-            serie.add(averageServiceTime, averageTime);
-        }
 
+            //System.out.println(counter++);
+            serie.add(averageServiceTime, averageTime);
+
+        }
         return serie;
     }
 
