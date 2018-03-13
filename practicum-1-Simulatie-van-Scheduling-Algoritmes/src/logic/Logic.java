@@ -53,8 +53,8 @@ public class Logic {
         //Global
         //Waittime
         Algorithms algorithms = new Algorithms();
-        int[] queueLengthMlfb = new int[]{1, 2, 4, 8};
-        int[] queueLengthMlfb2 = new int[]{1, 2, 3, 4};
+        int[] queueLengthMlfb = new int[]{20, 50, 100};
+//        int[] queueLengthMlfb2 = new int[]{1, 2, 3, 4};
         //WaitTime
         XYSeries[] FCFS = getXYSeriesWaitTimeFCFS( (Processes) deepClone(processes)); //WERKT
         XYSeries[] SJF = getXYSeriesWaitTimeSJF((Processes) deepClone(processes)); //WERKT
@@ -88,11 +88,11 @@ public class Logic {
 
         //Make line graph with XYdataset...
         FreeChartGraph globalWaittime= new FreeChartGraph( "Waittime",dataset,graph1JPanel);
-        globalWaittime.Make();
+        globalWaittime.Make(processes.getSortedByArrivalProcessList().size()/10);
 
         //Make line graph with XYdataset...
         FreeChartGraph globalServiceTime= new FreeChartGraph( "NTAT",dataset2,graph2JPanel);
-        globalServiceTime.Make();
+        globalServiceTime.Make(processes.getSortedByArrivalProcessList().size()/10);
 
     }
 
@@ -153,7 +153,7 @@ public class Logic {
 
     public XYSeries[] getXYSeriesWaitTimeMLFM(Processes processes,int[] queueLength) {
         XYSeries[] arrayXYSerie = new XYSeries[2];
-        Processes executedProcesses = algorithms.executeMLFB(processes.getSortedByWaitTimeProcessList(), queueLength, 8);
+        Processes executedProcesses = algorithms.executeMLFB(processes.getSortedByWaitTimeProcessList(), queueLength);
         arrayXYSerie[0] = waitTimePercentile(executedProcesses, "MLFM", "WaitTime");
         arrayXYSerie[1] = waitTimePercentile(executedProcesses, "MLFM", "ServiceTime");
 //        executedProcesses.getSortedByArrivalProcessList().forEach(p -> System.out.println(p.toString()));

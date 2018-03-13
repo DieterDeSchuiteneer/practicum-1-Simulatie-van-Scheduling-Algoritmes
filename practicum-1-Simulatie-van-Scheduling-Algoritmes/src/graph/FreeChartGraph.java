@@ -35,7 +35,7 @@ public class FreeChartGraph extends JFrame {
         graph1JPanel = graph1JPanelArg;
     }
 
-    public void Make() {
+    public void Make(int boundry) {
         JFreeChart chart = ChartFactory.createXYLineChart(title, "Gem. Servicetime", "Gem. " + title, dataset, PlotOrientation.VERTICAL, true, false, false);
         XYPlot plot = (XYPlot) chart.getPlot();
 
@@ -59,7 +59,7 @@ public class FreeChartGraph extends JFrame {
         plot.setDomainAxis(xAxis);
 
         NumberAxis domain = (NumberAxis) plot.getDomainAxis();
-        domain.setRange(0, 1000);
+        domain.setRange(0, boundry);
 
         ChartPanel chartPanel = new ChartPanel(chart);
 
