@@ -179,8 +179,6 @@ public class Algorithms {
         int q3ts = queueLength[2];
         int timeSlice = q1ts;
 
-
-
         //Process queues
         Queue<Process> pq1 = new LinkedList<>();
         Queue<Process> pq2 = new LinkedList<>();
@@ -190,23 +188,22 @@ public class Algorithms {
         //INITIALISATION
         //initialize clock at arrivaltime of first process
         clock = processList.get(0).getArrivalTime();
-        pq1.add(processList.get(0));
+        pq1.add(processList.remove(0));
+
         while (!pq1.isEmpty() || !pq2.isEmpty() || !pq3.isEmpty() || !processList.isEmpty() || currentProcess != null) {
-
-
             //Select the next process to execute
             if (!pq1.isEmpty() && currentProcess == null) {
                 currentProcess = pq1.remove();
-                nextQueue = pq2;
                 timeSlice = q1ts;
+                nextQueue = pq2;
             } else if (!pq2.isEmpty() && currentProcess == null) {
                 currentProcess = pq2.remove();
-                nextQueue = pq3;
                 timeSlice = q2ts;
+                nextQueue = pq3;
             } else if (!pq3.isEmpty() && currentProcess == null) {
                 currentProcess = pq3.remove();
-                nextQueue = pq3;
                 timeSlice = q3ts;
+                nextQueue = pq3;
             } else if (currentProcess == null) {
                 if (!processList.isEmpty()) {
                     currentProcess = processList.get(0);
@@ -219,30 +216,25 @@ public class Algorithms {
 
             //chosen process can execute until: time-slice is consumed or terminated
             if (currentProcess.getRemainingTime() <= timeSlice) { //process finishes
-                int finalClock = clock;
+                clock += currentProcess.getRemainingTime();
                 currentProcess.setRemainingTime(-1);
                 currentProcess.setEndTime(clock);
-
-                clock += currentProcess.getRemainingTime();
-                List nextArrivedProcesses = processList.stream().filter(p -> p.getArrivalTime() <= finalClock).collect(Collectors.toList());
-                processList.removeAll(nextArrivedProcesses);
-                pq1.addAll(nextArrivedProcesses);
-                completedProcessList.add(currentProcess);
-                currentProcess = null;
-
             } else {
                 clock += timeSlice;
-                int finalClock = clock;
                 currentProcess.setRemainingTime(currentProcess.getRemainingTime() - timeSlice);
                 nextQueue.add(currentProcess);
-                List nextArrivedProcesses = processList.stream().filter(p -> p.getArrivalTime() <= finalClock).collect(Collectors.toList());
-                processList.removeAll(nextArrivedProcesses);
-                pq1.addAll(nextArrivedProcesses);
-                currentProcess = null;
             }
+
+            int finalClock = clock;
+            List nextArrivedProcesses = processList.stream().filter(p -> p.getArrivalTime() <= finalClock).collect(Collectors.toList());
+            processList.removeAll(nextArrivedProcesses);
+            pq1.addAll(nextArrivedProcesses);
+            completedProcessList.add(currentProcess);
+            currentProcess = null;
+
         }
 
-        System.out.println("MLFM Completed");
+        System.out.println("MLFB Completed");
         return new Processes(completedProcessList);
     }
 
@@ -263,7 +255,7 @@ public class Algorithms {
                 clock = currenProcess.getArrivalTime();
                 currenProcess.setStartTime(clock);
             } else {
-                currenProcess = arrivedProcessList.stream().max(Comparator.comparing(Process::getNtat)).get(); //TODO: get the one with the biggest ntat
+                currenProcess = arrivedProcessList.stream().max(Comparator.comparing(Process::getNtat)).get();
                 currenProcess.setStartTime(clock);
             }
             arrivedProcessList.remove(currenProcess);
@@ -271,13 +263,14 @@ public class Algorithms {
             //Process the current process.
             clock += currenProcess.getRemainingTime();
             int finalClock = clock;
-            currenProcess.setEndTime(clock);
+            currenProcess.setEndTime(finalClock);
             completedProcessList.add(currenProcess);
 
             //find all the newly arrived processes.
             List<Process> newProcessList = processList.stream().filter(p -> p.getArrivalTime() <= finalClock).collect(Collectors.toList());
             arrivedProcessList.addAll(newProcessList);
             processList.removeAll(arrivedProcessList);
+
             //Recalculate NTAT.
             arrivedProcessList.forEach(p-> p.setStartTime(finalClock));
             arrivedProcessList.forEach(p-> p.setEndTime(finalClock + p.getServiceTime()));

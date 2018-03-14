@@ -5,6 +5,7 @@ import dataentities.Process;
 import dataentities.Processes;
 import graph.FreeChartGraph;
 import io.XMLReader;
+import javafx.concurrent.Task;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
@@ -53,16 +54,16 @@ public class Logic {
         //Global
         //Waittime
         Algorithms algorithms = new Algorithms();
-        int[] queueLengthMlfb = new int[]{20, 50, 100};
-//        int[] queueLengthMlfb2 = new int[]{1, 2, 3, 4};
+        int[] queueLengthMlfb = new int[]{10, 50, 100};
         //WaitTime
         XYSeries[] FCFS = getXYSeriesWaitTimeFCFS( (Processes) deepClone(processes)); //WERKT
         XYSeries[] SJF = getXYSeriesWaitTimeSJF((Processes) deepClone(processes)); //WERKT
         XYSeries[] RR2 = getXYSeriesWaitTimeRRTs2((Processes) deepClone(processes));//WERKT
         XYSeries[] RR8 = getXYSeriesWaitTimeRRTs8((Processes) deepClone(processes));//WERKT
         XYSeries[] SRTF = getXYSeriesWaitTimeSRTF((Processes) deepClone(processes)); //NOPE
-        XYSeries[] MLFM = getXYSeriesWaitTimeMLFM((Processes) deepClone(processes),queueLengthMlfb);//WERKT
+        XYSeries[] MLFM = getXYSeriesWaitTimeMLFM((Processes) deepClone(processes),queueLengthMlfb);//WERKT?
         XYSeries[] HRRN = getXYSeriesWaitTimeHRRN((Processes) deepClone(processes)); //WERKT
+
 
         //Waittime
         dataset = new XYSeriesCollection();
