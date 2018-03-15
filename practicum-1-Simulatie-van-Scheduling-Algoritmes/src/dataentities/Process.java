@@ -48,7 +48,7 @@ public class Process implements java.io.Serializable {
     public void setEndTime(int endTime) {
         this.endTime = endTime;
         this.waitTime = this.startTime - this.arrivalTime;
-        this.tat = this.serviceTime + this.waitTime;
+        this.tat = this.endTime - this.arrivalTime;
         this.ntat = this.tat / this.serviceTime;
     }
 
