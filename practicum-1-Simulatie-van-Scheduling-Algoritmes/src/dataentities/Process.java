@@ -15,6 +15,7 @@ public class Process implements java.io.Serializable {
         this.remainingTime = remainingTime;
     }
     public void setStartTime(int startTime) { if(this.startTime == -1) this.startTime = startTime; }
+    public void forceStartTime(int startTime) { this.startTime = startTime; }
 
     public int getArrivalTime() {
         return arrivalTime;

@@ -95,7 +95,7 @@ public class Algorithms {
                 if (!processList.isEmpty()) {
                     int finalClock = clock;
                     List<Process> temp = processList.stream().filter(p -> p.getArrivalTime() <= finalClock).collect(Collectors.toList());
-                    for(Process p:temp) {RRProcessQueue.add(p);}
+                    RRProcessQueue.addAll(temp);
                     processList.removeAll(temp);
                 }
             } else {
@@ -104,7 +104,7 @@ public class Algorithms {
                 currentProcess.setRemainingTime(currentProcess.getRemainingTime() - timeSlice);
                 if (!processList.isEmpty()) {
                     List<Process> temp = processList.stream().filter(p -> p.getArrivalTime() <= finalClock).collect(Collectors.toList());
-                    for(Process p:temp) {RRProcessQueue.add(p);}
+                    RRProcessQueue.addAll(temp);
                     processList.removeAll(temp);
                 }
                 RRProcessQueue.add(currentProcess);
@@ -272,7 +272,7 @@ public class Algorithms {
             processList.removeAll(arrivedProcessList);
 
             //Recalculate NTAT.
-            arrivedProcessList.forEach(p-> p.setStartTime(finalClock));
+            arrivedProcessList.forEach(p-> p.forceStartTime(finalClock));
             arrivedProcessList.forEach(p-> p.setEndTime(finalClock + p.getServiceTime()));
         }
 

@@ -46,7 +46,7 @@ public class FreeChartGraph extends JFrame {
                         Color.magenta,
                         Color.black,
                         Color.cyan,
-                        Color.gray,
+                        Color.orange,
                         Color.yellow,
                         Color.black},
                 DefaultDrawingSupplier.DEFAULT_OUTLINE_PAINT_SEQUENCE,

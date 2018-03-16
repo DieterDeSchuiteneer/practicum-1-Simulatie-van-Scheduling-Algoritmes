@@ -61,18 +61,77 @@ public class Logic {
         XYSeries[] RR2 = getXYSeriesWaitTimeRRTs2((Processes) deepClone(processes));//WERKT
         XYSeries[] RR8 = getXYSeriesWaitTimeRRTs8((Processes) deepClone(processes));//WERKT
         XYSeries[] SRTF = getXYSeriesWaitTimeSRTF((Processes) deepClone(processes)); //NOPE
-        XYSeries[] MLFM = getXYSeriesWaitTimeMLFM((Processes) deepClone(processes),queueLengthMlfb);//WERKT?
+        XYSeries[] MLFB = getXYSeriesWaitTimeMLFB((Processes) deepClone(processes),queueLengthMlfb);//WERKT?
         XYSeries[] HRRN = getXYSeriesWaitTimeHRRN((Processes) deepClone(processes)); //WERKT
+/*
+        Task FCFSTask = new Task() {
+            @Override
+            protected Object call() throws Exception {return getXYSeriesWaitTimeFCFS( (Processes) deepClone(processes));}
+        };
 
+        Task SJFTask = new Task() {
+            @Override
+            protected Object call() throws Exception {return getXYSeriesWaitTimeSJF( (Processes) deepClone(processes));}
+        };
+
+        Task RR2Task = new Task() {
+            @Override
+            protected Object call() throws Exception {return getXYSeriesWaitTimeRRTs2( (Processes) deepClone(processes));}
+        };
+
+        Task RR8Task = new Task() {
+            @Override
+            protected Object call() throws Exception {return getXYSeriesWaitTimeRRTs8( (Processes) deepClone(processes));}
+        };
+
+        Task SRTFTask = new Task() {
+            @Override
+            protected Object call() throws Exception {return getXYSeriesWaitTimeSRTF( (Processes) deepClone(processes));}
+        };
+        Task MLFBTask = new Task() {
+            @Override
+            protected Object call() throws Exception {return getXYSeriesWaitTimeMLFB((Processes) deepClone(processes),queueLengthMlfb);}
+        };
+        Task HRRNTask = new Task() {
+            @Override
+            protected Object call() throws Exception {return getXYSeriesWaitTimeHRRN( (Processes) deepClone(processes));}
+        };
+
+        FCFSTask.run();
+        SJFTask.run();
+        RR2Task.run();
+        RR8Task.run();
+        SRTFTask.run();
+        MLFBTask.run();
+        HRRNTask.run();
 
         //Waittime
+        dataset = new XYSeriesCollection();
+        dataset.addSeries(((XYSeries[])FCFSTask.getValue())[0]); //WERKT
+        dataset.addSeries(((XYSeries[])SJFTask.getValue())[0]); //WERKT
+        dataset.addSeries(((XYSeries[])RR2Task.getValue())[0]); //WERKT
+        dataset.addSeries(((XYSeries[])RR8Task.getValue())[0]); //WERKT
+        dataset.addSeries(((XYSeries[])SRTFTask.getValue())[0]); //WERKT?
+        dataset.addSeries(((XYSeries[])MLFBTask.getValue())[0]); //WERKT
+        dataset.addSeries(((XYSeries[])HRRNTask.getValue())[0]); //WERKT
+
+        //ServiceTime
+        dataset2 = new XYSeriesCollection();
+        dataset2.addSeries(((XYSeries[])FCFSTask.getValue())[1]); //WERKT
+        dataset2.addSeries(((XYSeries[])SJFTask.getValue())[1]); //WERKT
+        dataset2.addSeries(((XYSeries[])RR2Task.getValue())[1]);//WERKT
+        dataset2.addSeries(((XYSeries[])RR8Task.getValue())[1]);//WERKT
+        dataset2.addSeries(((XYSeries[])SRTFTask.getValue())[1]); //WERKT?
+        dataset2.addSeries(((XYSeries[])MLFBTask.getValue())[1]); //WERKT
+        dataset2.addSeries(((XYSeries[])HRRNTask.getValue())[1]); //WERKT
+*/
         dataset = new XYSeriesCollection();
         dataset.addSeries(FCFS[0]); //WERKT
         dataset.addSeries(SJF[0]); //WERKT
         dataset.addSeries(RR2[0]); //WERKT
         dataset.addSeries(RR8[0]); //WERKT
         dataset.addSeries(SRTF[0]); //WERKT?
-        dataset.addSeries(MLFM[0]); //WERKT
+        dataset.addSeries(MLFB[0]); //WERKT
         dataset.addSeries(HRRN[0]); //WERKT
 
         //ServiceTime
@@ -82,7 +141,7 @@ public class Logic {
         dataset2.addSeries(RR2[1]);//WERKT
         dataset2.addSeries(RR8[1]);//WERKT
         dataset2.addSeries(SRTF[1]); //WERKT?
-        dataset2.addSeries(MLFM[1]); //WERKT
+        dataset2.addSeries(MLFB[1]); //WERKT
         dataset2.addSeries(HRRN[1]); //WERKT
 
         //calculateAverages(processes);
@@ -152,7 +211,7 @@ public class Logic {
     }
 
 
-    public XYSeries[] getXYSeriesWaitTimeMLFM(Processes processes,int[] queueLength) {
+    public XYSeries[] getXYSeriesWaitTimeMLFB(Processes processes, int[] queueLength) {
         XYSeries[] arrayXYSerie = new XYSeries[2];
         Processes executedProcesses = algorithms.executeMLFB(processes.getSortedByWaitTimeProcessList(), queueLength);
         arrayXYSerie[0] = waitTimePercentile(executedProcesses, "MLFM", "WaitTime");
