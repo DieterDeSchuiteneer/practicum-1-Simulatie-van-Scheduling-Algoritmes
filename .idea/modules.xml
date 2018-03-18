@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project version="4">
-  <component name="ProjectModuleManager">
-    <modules>
-      <module fileurl="file://$PROJECT_DIR$/practicum-1-Simulatie-van-Scheduling-Algoritmes/lib/lib.iml" filepath="$PROJECT_DIR$/practicum-1-Simulatie-van-Scheduling-Algoritmes/lib/lib.iml" />
-      <module fileurl="file://$PROJECT_DIR$/practicum-1-Simulatie-van-Scheduling-Algoritmes/practicum-1-Simulatie-van-Scheduling-Algoritmes.iml" filepath="$PROJECT_DIR$/practicum-1-Simulatie-van-Scheduling-Algoritmes/practicum-1-Simulatie-van-Scheduling-Algoritmes.iml" />
-    </modules>
-  </component>
-</project>

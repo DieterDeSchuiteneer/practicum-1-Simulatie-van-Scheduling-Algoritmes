@@ -11,7 +11,11 @@ import java.util.stream.Collectors;
 
 public class Algorithms {
 
-
+    /**
+     * FCFS algorithm
+     * @param processList sorted by arrival time
+     * @return
+     */
     public Processes executeFCFS(List<Process> processList) {
         int clock = processList.get(0).getArrivalTime();
         List<Process>  compProcesses = new LinkedList<>();
@@ -30,7 +34,11 @@ public class Algorithms {
         return new Processes(compProcesses);
     }
 
-
+    /**
+     * SJF algorithm
+     * @param processList sorted by arrival time
+     * @return
+     */
     public Processes executeSJF(List<Process> processList) {
         List<Process> completed = new LinkedList<>();
         List<Process> arrivedProcessesList = new LinkedList<>();
@@ -70,6 +78,12 @@ public class Algorithms {
     }
 
 
+    /**
+     *
+     * @param processList sorted by arrival time
+     * @param timeSlice the used time slice for round robin
+     * @return
+     */
     public Processes executeRR(List<Process> processList, int timeSlice) {
         Queue<Process> RRProcessQueue = new LinkedList<>();
         List<Process> completedProcessList = new LinkedList<>();

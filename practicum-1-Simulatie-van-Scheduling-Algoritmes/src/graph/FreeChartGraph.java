@@ -1,16 +1,14 @@
 package graph;
 
-import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Paint;
 
 import javax.swing.JFrame;
 
+import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.plot.DefaultDrawingSupplier;
 
-import org.jfree.data.Range;
 import org.jfree.data.xy.XYDataset;
-import javafx.geometry.Orientation;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.axis.LogarithmicAxis;
 import org.jfree.chart.axis.NumberAxis;
@@ -19,8 +17,12 @@ import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.chart.plot.XYPlot;
 
-import javax.swing.*;
 import java.awt.*;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+
 
 public class FreeChartGraph extends JFrame {
 
@@ -63,14 +65,18 @@ public class FreeChartGraph extends JFrame {
 
         ChartPanel chartPanel = new ChartPanel(chart);
 
+        try {
+            ChartUtilities.saveChartAsPNG(new File(title+".png"), chart, 1000, 500);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
         graph1JPanel.removeAll();
         Dimension panelSize = graph1JPanel.getSize();
         graph1JPanel.add(chartPanel,BorderLayout.CENTER);
         chartPanel.setSize(panelSize);
 
-        //chartPanel.zoomOutBoth(300, 300);
-        //graph1JPanel.add(chartPanel);
-        //graph1JPanel.validate();
     }
 
 }

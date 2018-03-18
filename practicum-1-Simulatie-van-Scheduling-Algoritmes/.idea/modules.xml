@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/practicum-1.iml" filepath="$PROJECT_DIR$/practicum-1.iml" />
       <module fileurl="file://$PROJECT_DIR$/practicum-1-Simulatie-van-Scheduling-Algoritmes.iml" filepath="$PROJECT_DIR$/practicum-1-Simulatie-van-Scheduling-Algoritmes.iml" />
     </modules>
   </component>
