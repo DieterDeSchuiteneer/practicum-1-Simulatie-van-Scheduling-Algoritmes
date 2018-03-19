@@ -293,4 +293,8 @@ public class Algorithms {
         System.out.println("HRRN completed");
         return new Processes(completedProcessList);
     }
+
+
+    /////////////////////////////////Helpers///////////////////////////////////
+
 }

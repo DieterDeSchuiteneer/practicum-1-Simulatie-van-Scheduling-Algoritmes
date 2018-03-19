@@ -97,24 +97,24 @@
           <grid id="3071b" binding="graph1JPanel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
             <constraints>
               <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                <preferred-size width="400" height="400"/>
+                <preferred-size width="400" height="300"/>
               </grid>
             </constraints>
             <properties>
               <background color="-855310"/>
               <enabled value="true"/>
             </properties>
-            <border type="line" title="Graph1"/>
+            <border type="none"/>
             <children/>
           </grid>
           <grid id="14b52" binding="graph2JPanel" layout-manager="FlowLayout" hgap="5" vgap="5" flow-align="1">
             <constraints>
               <grid row="1" column="1" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                <preferred-size width="400" height="400"/>
+                <preferred-size width="400" height="300"/>
               </grid>
             </constraints>
             <properties/>
-            <border type="line" title="Graph2 "/>
+            <border type="none"/>
             <children/>
           </grid>
         </children>
