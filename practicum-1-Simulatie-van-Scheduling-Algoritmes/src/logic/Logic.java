@@ -185,7 +185,7 @@ public class Logic {
 
     public XYSeries[] getXYSeriesWaitTimeRRTs2(Processes processes) {
         XYSeries[] arrayXYSerie = new XYSeries[2];
-        Processes executedProcesses = algorithms.executeRR(processes.getSortedByWaitTimeProcessList(), 2);
+        Processes executedProcesses = algorithms.newRR(processes.getSortedByWaitTimeProcessList(), 2);
         arrayXYSerie[0] = waitTimePercentile(executedProcesses, "RR ts=2", "WaitTime");
         arrayXYSerie[1] = waitTimePercentile(executedProcesses, "RR ts=2", "ServiceTime");
 //        executedProcesses.getSortedByArrivalProcessList().forEach(p -> System.out.println(p.toString()));
@@ -197,7 +197,7 @@ public class Logic {
         Processes executedProcesses = algorithms.executeRR(processes.getSortedByWaitTimeProcessList(), 8);
         arrayXYSerie[0] = waitTimePercentile(executedProcesses, "RR ts=8", "WaitTime");
         arrayXYSerie[1] = waitTimePercentile(executedProcesses, "RR ts=8", "ServiceTime");
-//        executedProcesses.getSortedByArrivalProcessList().forEach(p -> System.out.println(p.toString()));
+        executedProcesses.getSortedByArrivalProcessList().forEach(p -> System.out.println(p.toString()));
         return arrayXYSerie;
     }
 
@@ -252,7 +252,6 @@ public class Logic {
             else
                 averageTime = (int) percentile.stream().map(Process::getNtat).mapToDouble(i -> i).sum() / percentile.size();
 
-            //System.out.println(counter++);
             serie.add(averageServiceTime, averageTime);
 
         }

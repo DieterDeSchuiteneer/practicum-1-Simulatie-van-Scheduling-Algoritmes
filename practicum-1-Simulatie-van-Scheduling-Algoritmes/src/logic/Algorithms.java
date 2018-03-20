@@ -2,6 +2,7 @@ package logic;
 
 import dataentities.Process;
 import dataentities.Processes;
+import org.w3c.dom.ls.LSInput;
 
 import java.util.Comparator;
 import java.util.LinkedList;
@@ -85,45 +86,102 @@ public class Algorithms {
      * @return
      */
     public Processes executeRR(List<Process> processList, int timeSlice) {
+        Queue<Process> processqueue = new LinkedList<Process>();
+        int counter = 0;//time
+        int processCounter = 0;
+        List<Process> completedProcessList = new LinkedList<>();
+        // Execute algorithm until the last process has finished and the processqueue is empty
+        while(processList.get(processList.size()-1).getRemainingTime() !=0 || !processqueue.isEmpty()) {
+            if(!processqueue.isEmpty()) {
+                int remainingQ = timeSlice;
+                Process p = processqueue.poll();
+                if(p.getServiceTime() == p.getRemainingTime()) {
+                    p.setStartTime(counter);
+                }
+                // While the quantum and process are not finished,
+                while(remainingQ > 0 && p.getRemainingTime() > 0) {
+                    p.setRemainingTime(p.getRemainingTime()-1);
+                    counter++;
+                    remainingQ--;
+
+                    // If new processes arrive while another process is executing, add it to the queue
+                    if(processCounter < processList.size()) {
+                        if(counter == processList.get(processCounter).getArrivalTime()) {
+                            processqueue.add(processList.get(processCounter));
+                            processCounter++;
+                        }
+                    }
+                }
+                // If process is not finished, add it back to the queue
+                if(p.getRemainingTime() > 0 ) {
+                    processqueue.add(p);
+                }
+                else {
+                    p.setEndTime(counter);
+                    completedProcessList.add(p);
+                }
+            }
+            // If there are no processes in queue, we can skip time to the next arrivaltime
+            else {
+                if(processCounter < processList.size()) {
+                    counter = processList.get(processCounter).getArrivalTime();
+                    processqueue.add(processList.get(processCounter));//zet nieuw proces in de queue
+                    processCounter++;//pas aan hoeveel processen in de queue
+                }
+            }
+        }
+        System.out.println("RR_"+ timeSlice +" Completed");
+        return new Processes(completedProcessList);
+    }
+
+    public Processes newRR(List<Process> processList, int timeSlice){
         Queue<Process> RRProcessQueue = new LinkedList<>();
         List<Process> completedProcessList = new LinkedList<>();
         Process currentProcess = null;
 
-        RRProcessQueue.add(processList.get(0));
         int clock = processList.get(0).getArrivalTime();
-        processList.remove(0);
+        RRProcessQueue.add(processList.remove(0));
 
-        while (!processList.isEmpty() || !RRProcessQueue.isEmpty()) {
-            if(processList.isEmpty() && RRProcessQueue.isEmpty()) break;
-            if(!RRProcessQueue.isEmpty()) currentProcess = RRProcessQueue.poll();
-            if(!processList.isEmpty() && RRProcessQueue.isEmpty()){
-                clock = processList.get(0).getArrivalTime();
-                RRProcessQueue.add(processList.remove(0));
+        while(true) {
+            if(processList.isEmpty() && RRProcessQueue.isEmpty() && currentProcess == null) break;
+
+            if(currentProcess == null){
+                if(!RRProcessQueue.isEmpty()) currentProcess = RRProcessQueue.poll();
+                else {
+                    currentProcess = processList.remove(0);
+                    clock = currentProcess.getArrivalTime();
+                }
             }
+
             currentProcess.setStartTime(clock);
 
-            if (currentProcess.getRemainingTime() <= timeSlice) {
+            //if the remaining time is schorter or equal to the timeslice
+            if(currentProcess.getRemainingTime() <= timeSlice) {
                 clock += currentProcess.getRemainingTime();
+                int finalClock = clock;
                 currentProcess.setEndTime(clock);
-                completedProcessList.add(currentProcess);
-                if (!processList.isEmpty()) {
-                    int finalClock = clock;
-                    List<Process> temp = processList.stream().filter(p -> p.getArrivalTime() <= finalClock).collect(Collectors.toList());
-                    RRProcessQueue.addAll(temp);
-                    processList.removeAll(temp);
-                }
+
+                List<Process> temp = processList.stream().filter(p -> p.getArrivalTime() <= finalClock).collect(Collectors.toList());
+                RRProcessQueue.addAll(temp);
+                processList.removeAll(temp);
+
+                completedProcessList.add((Process)Logic.deepClone(currentProcess));
             } else {
                 clock += timeSlice;
                 int finalClock = clock;
+
+                List<Process> temp = processList.stream().filter(p -> p.getArrivalTime() <= finalClock).collect(Collectors.toList());
+                RRProcessQueue.addAll(temp);
+                processList.removeAll(temp);
+
                 currentProcess.setRemainingTime(currentProcess.getRemainingTime() - timeSlice);
-                if (!processList.isEmpty()) {
-                    List<Process> temp = processList.stream().filter(p -> p.getArrivalTime() <= finalClock).collect(Collectors.toList());
-                    RRProcessQueue.addAll(temp);
-                    processList.removeAll(temp);
-                }
-                RRProcessQueue.add(currentProcess);
+                RRProcessQueue.add((Process) Logic.deepClone(currentProcess));
             }
+            currentProcess = null;
+
         }
+
+
         System.out.println("RR Completed");
         return new Processes(completedProcessList);
     }
