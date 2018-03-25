@@ -2,13 +2,11 @@ package io;
 
 import dataentities.Process;
 import dataentities.Processes;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
+import org.w3c.dom.*;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 
 public class XMLReader {
@@ -57,5 +55,4 @@ public class XMLReader {
         Node node = nodeList.item(0);
         return node.getNodeValue();
     }
-
 }

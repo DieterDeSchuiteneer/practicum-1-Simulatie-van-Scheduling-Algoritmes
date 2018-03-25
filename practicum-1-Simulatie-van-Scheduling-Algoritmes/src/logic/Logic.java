@@ -194,7 +194,7 @@ public class Logic {
 
     public XYSeries[] getXYSeriesWaitTimeRRTs8(Processes processes) {
         XYSeries[] arrayXYSerie = new XYSeries[2];
-        Processes executedProcesses = algorithms.executeRR(processes.getSortedByWaitTimeProcessList(), 8);
+        Processes executedProcesses = algorithms.newRR(processes.getSortedByWaitTimeProcessList(), 8);
         arrayXYSerie[0] = waitTimePercentile(executedProcesses, "RR ts=8", "WaitTime");
         arrayXYSerie[1] = waitTimePercentile(executedProcesses, "RR ts=8", "ServiceTime");
         executedProcesses.getSortedByArrivalProcessList().forEach(p -> System.out.println(p.toString()));
@@ -216,7 +216,9 @@ public class Logic {
         Processes executedProcesses = algorithms.executeMLFB(processes.getSortedByWaitTimeProcessList(), queueLength);
         arrayXYSerie[0] = waitTimePercentile(executedProcesses, "MLFM", "WaitTime");
         arrayXYSerie[1] = waitTimePercentile(executedProcesses, "MLFM", "ServiceTime");
-//        executedProcesses.getSortedByArrivalProcessList().forEach(p -> System.out.println(p.toString()));
+        executedProcesses.getSortedByArrivalProcessList().forEach(p -> System.out.println(p.toString()));
+        System.out.println(executedProcesses.getSortedByArrivalProcessList().size());
+
         return arrayXYSerie;
     }
 
