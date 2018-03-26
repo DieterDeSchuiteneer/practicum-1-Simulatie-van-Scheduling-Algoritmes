@@ -14,18 +14,19 @@ public class Algorithms {
 
     /**
      * FCFS algorithm
+     *
      * @param processList sorted by arrival time
      * @return
      */
     public Processes executeFCFS(List<Process> processList) {
         int clock = processList.get(0).getArrivalTime();
-        List<Process>  compProcesses = new LinkedList<>();
+        List<Process> compProcesses = new LinkedList<>();
         for (Process process : processList) {
             process.setStartTime(clock);
             if (clock < process.getArrivalTime()) {
                 process.setStartTime(process.getArrivalTime());
                 process.setEndTime(process.getArrivalTime() + process.getServiceTime());
-            }else {
+            } else {
                 process.setEndTime(clock + process.getServiceTime());
             }
             compProcesses.add(process);
@@ -37,6 +38,7 @@ public class Algorithms {
 
     /**
      * SJF algorithm
+     *
      * @param processList sorted by arrival time
      * @return processed processes
      */
@@ -79,68 +81,62 @@ public class Algorithms {
     }
 
 
-    /**
-     *
-     * @param processList sorted by arrival time
-     * @param timeSlice the used time slice for round robin
-     * @return
-     */
-    public Processes executeRR(List<Process> processList, int timeSlice) {
-        Queue<Process> processQueue = new LinkedList<>();
-        int counter = 0;
-        int processCounter = 0;
+    public Processes RoundRobin(List<Process> process_BeforeExecute, int quantum) {
+        int clock = 0;
+        Process temp;
         List<Process> completedProcessList = new LinkedList<>();
-        // Execute algorithm until the last process has finished and the processqueue is empty
-        while(processList.get(processList.size()-1).getRemainingTime() !=0 || !processQueue.isEmpty()) {
-            if(!processQueue.isEmpty()) {
-                int remainingQ = timeSlice;
-                Process p = processQueue.poll();
-                if(p.getServiceTime() == p.getRemainingTime()) {
-                    p.setStartTime(counter);
-                }
-                // While the quantum and process are not finished,
-                while(remainingQ > 0 && p.getRemainingTime() > 0) {
-                    p.setRemainingTime(p.getRemainingTime()-1);
-                    counter++;
-                    remainingQ--;
+        int numberOfProcesses = process_BeforeExecute.size();
+        int remainingTime;
+        clock = process_BeforeExecute.get(0).getArrivalTime();
+        int pid = 1;
+        Queue<Process> RR_Queue = new LinkedList<>();
+        RR_Queue.add(process_BeforeExecute.get(0));
+        process_BeforeExecute.get(0).setRemainingTime((process_BeforeExecute.get(0).getServiceTime()));
 
-                    // If new processes arrive while another process is executing, add it to the queue
-                    if(processCounter < processList.size()) {
-                        if(counter == processList.get(processCounter).getArrivalTime()) {
-                            processQueue.add(processList.get(processCounter));
-                            processCounter++;
-                        }
-                    }
-                }
-                // If process is not finished, add it back to the queue
-                if(p.getRemainingTime() > 0 ) {
-                    processQueue.add(p);
-                }
-                else {
-                    p.setEndTime(counter);
-                    completedProcessList.add(p);
+        while (RR_Queue.size() != 0) {
+            temp = RR_Queue.remove();
+            remainingTime = temp.getRemainingTime();
+            for (int i = 0; i < quantum; i++) {
+                clock = clock + 1;
+                remainingTime = remainingTime - 1;
+                temp.setStartTime(remainingTime);
+                if (remainingTime == 0) {
+                    i = i + quantum;
+                    temp.setEndTime(clock);
+                    completedProcessList.add(temp);
                 }
             }
-            // If there are no processes in queue, we can skip time to the next arrivaltime
-            else {
-                if(processCounter < processList.size()) {
-                    counter = processList.get(processCounter).getArrivalTime();
-                    processQueue.add(processList.get(processCounter));//zet nieuw proces in de queue
-                    processCounter++;//pas aan hoeveel processen in de queue
+            if (pid < numberOfProcesses) {
+                if (process_BeforeExecute.get(pid).getArrivalTime() <= clock) {
+                    RR_Queue.add(process_BeforeExecute.get(pid));
+                    process_BeforeExecute.get(pid).setRemainingTime(process_BeforeExecute.get(pid).getRemainingTime());
+                    pid = pid + 1;
                 }
+            }
+            if (remainingTime > 0) {
+                RR_Queue.add(temp);
+            }
+            if (RR_Queue.size() == 0 && pid < numberOfProcesses) {
+                RR_Queue.add(process_BeforeExecute.get(pid));
+                process_BeforeExecute.get(pid).setRemainingTime(process_BeforeExecute.get(pid).getServiceTime());
+                clock = process_BeforeExecute.get(pid).getArrivalTime();
+                pid = pid + 1;
             }
         }
-        System.out.println("RR_"+ timeSlice +" Completed");
-        return new Processes(completedProcessList);
+/*
+        for(Process p : process_BeforeExecute)
+        {
+            p.setStartTime(p.getEndTime() - p.getServiceTime());
+        }*/
+        return new Processes(process_BeforeExecute);
     }
 
     /**
-     *
      * @param processList
-     * @param timeSlice the timeslice
+     * @param timeSlice   the timeslice
      * @return
      */
-    public Processes newRR(List<Process> processList, int timeSlice){
+    public Processes newRR(List<Process> processList, int timeSlice) {
         Queue<Process> RRProcessQueue = new LinkedList<>();
         List<Process> completedProcessList = new LinkedList<>();
         Process currentProcess = null;
@@ -148,11 +144,11 @@ public class Algorithms {
         int clock = processList.get(0).getArrivalTime();
         RRProcessQueue.add(processList.remove(0));
 
-        while(true) {
-            if(processList.isEmpty() && RRProcessQueue.isEmpty() && currentProcess == null) break;
+        while (true) {
+            if (processList.isEmpty() && RRProcessQueue.isEmpty() && currentProcess == null) break;
 
-            if(currentProcess == null){
-                if(!RRProcessQueue.isEmpty()) currentProcess = RRProcessQueue.poll();
+            if (currentProcess == null) {
+                if (!RRProcessQueue.isEmpty()) currentProcess = RRProcessQueue.poll();
                 else {
                     currentProcess = processList.remove(0);
                     clock = currentProcess.getArrivalTime();
@@ -162,7 +158,7 @@ public class Algorithms {
             currentProcess.setStartTime(clock);
 
             //if the remaining time is schorter or equal to the timeslice
-            if(currentProcess.getRemainingTime() <= timeSlice) {
+            if (currentProcess.getRemainingTime() <= timeSlice) {
                 clock += currentProcess.getRemainingTime();
                 int finalClock = clock;
                 currentProcess.setEndTime(clock);
@@ -171,7 +167,7 @@ public class Algorithms {
                 RRProcessQueue.addAll(temp);
                 processList.removeAll(temp);
 
-                completedProcessList.add((Process)Logic.deepClone(currentProcess));
+                completedProcessList.add((Process) Logic.deepClone(currentProcess));
             } else {
                 clock += timeSlice;
                 int finalClock = clock;
@@ -194,6 +190,7 @@ public class Algorithms {
 
     /**
      * the process with the smallest amount of time remaining until completion is selected to execute
+     *
      * @param processList
      * @return
      */
@@ -205,8 +202,8 @@ public class Algorithms {
 
         while (!arrivedProcessesList.isEmpty() || !processList.isEmpty()) {
             //System.out.println(counter);
-            if(arrivedProcessesList.isEmpty() && processList.isEmpty() ) break;
-            if(!processList.isEmpty()) {
+            if (arrivedProcessesList.isEmpty() && processList.isEmpty()) break;
+            if (!processList.isEmpty()) {
                 if (counter == processList.get(0).getArrivalTime()) {
                     //add to arrived Lists
                     arrivedProcessesList.add(processList.remove(0));
@@ -214,7 +211,7 @@ public class Algorithms {
                     currentProcess.setStartTime(counter);
                 }
             }
-            if(arrivedProcessesList.isEmpty()&& !processList.isEmpty() && currentProcess == null){
+            if (arrivedProcessesList.isEmpty() && !processList.isEmpty() && currentProcess == null) {
                 currentProcess = processList.remove(0);
                 counter = currentProcess.getArrivalTime();
                 currentProcess.setStartTime(counter);
@@ -226,7 +223,7 @@ public class Algorithms {
                 currentProcess.setEndTime(counter);
                 completed.add(currentProcess);
                 currentProcess = evaluate(null, arrivedProcessesList);
-                if(currentProcess != null) currentProcess.setStartTime(counter);
+                if (currentProcess != null) currentProcess.setStartTime(counter);
             }
 
 
@@ -241,7 +238,7 @@ public class Algorithms {
             arrivedProcessList.add(currentProcess);
         }
         currentProcess = arrivedProcessList.stream().min(Comparator.comparing(Process::getRemainingTime)).orElse(null);
-        if(currentProcess != null) arrivedProcessList.remove(currentProcess);
+        if (currentProcess != null) arrivedProcessList.remove(currentProcess);
         return currentProcess;
     }
 
@@ -325,10 +322,10 @@ public class Algorithms {
         int clock = processList.get(0).getArrivalTime();
         arrivedProcessList.add(processList.remove(0));
 
-        while(currenProcess != null || !processList.isEmpty() || !arrivedProcessList.isEmpty()) {
+        while (currenProcess != null || !processList.isEmpty() || !arrivedProcessList.isEmpty()) {
             //select process with higest NTAT from list
-            if(arrivedProcessList.isEmpty()){
-                if(processList.size() == 0 && arrivedProcessList.isEmpty()) break;
+            if (arrivedProcessList.isEmpty()) {
+                if (processList.size() == 0 && arrivedProcessList.isEmpty()) break;
                 currenProcess = processList.remove(0);
                 clock = currenProcess.getArrivalTime();
                 currenProcess.setStartTime(clock);
@@ -350,15 +347,11 @@ public class Algorithms {
             processList.removeAll(arrivedProcessList);
 
             //Recalculate NTAT.
-            arrivedProcessList.forEach(p-> p.forceStartTime(finalClock));
-            arrivedProcessList.forEach(p-> p.setEndTime(finalClock + p.getServiceTime()));
+            arrivedProcessList.forEach(p -> p.forceStartTime(finalClock));
+            arrivedProcessList.forEach(p -> p.setEndTime(finalClock + p.getServiceTime()));
         }
 
         System.out.println("HRRN completed");
         return new Processes(completedProcessList);
     }
-
-
-    /////////////////////////////////Helpers///////////////////////////////////
-
 }

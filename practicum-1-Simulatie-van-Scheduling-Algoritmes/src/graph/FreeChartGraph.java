@@ -61,7 +61,7 @@ public class FreeChartGraph extends JFrame {
         plot.setDomainAxis(xAxis);
 
         NumberAxis domain = (NumberAxis) plot.getDomainAxis();
-        domain.setRange(0, boundry);
+        domain.setRange(-1, boundry);
 
         ChartPanel chartPanel = new ChartPanel(chart);
 

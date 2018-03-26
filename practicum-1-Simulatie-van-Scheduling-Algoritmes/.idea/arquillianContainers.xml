@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ArquillianContainersManager">
+    <container containerId="container.arquillian.embedded.weld.se.1" name="Weld SE Embedded 1.x">
+      <maven-library groupId="org.jboss.arquillian.container" artifactId="arquillian-weld-se-embedded-1" version="RELEASE" />
+      <maven-library groupId="org.slf4j" artifactId="slf4j-simple" version="RELEASE" />
+    </container>
+  </component>
+</project>

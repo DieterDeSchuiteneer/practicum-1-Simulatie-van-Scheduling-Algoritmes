@@ -111,7 +111,7 @@ public class Logic {
         dataset.addSeries(((XYSeries[])SJFTask.getValue())[0]); //WERKT
         dataset.addSeries(((XYSeries[])RR2Task.getValue())[0]); //WERKT
         dataset.addSeries(((XYSeries[])RR8Task.getValue())[0]); //WERKT
-        dataset.addSeries(((XYSeries[])SRTFTask.getValue())[0]); //WERKT?
+        dataset.addSeries(((XYSeries[])SRTFTask.getValue())[0]); //WERKT
         dataset.addSeries(((XYSeries[])MLFBTask.getValue())[0]); //WERKT
         dataset.addSeries(((XYSeries[])HRRNTask.getValue())[0]); //WERKT
 
@@ -121,7 +121,7 @@ public class Logic {
         dataset2.addSeries(((XYSeries[])SJFTask.getValue())[1]); //WERKT
         dataset2.addSeries(((XYSeries[])RR2Task.getValue())[1]);//WERKT
         dataset2.addSeries(((XYSeries[])RR8Task.getValue())[1]);//WERKT
-        dataset2.addSeries(((XYSeries[])SRTFTask.getValue())[1]); //WERKT?
+        dataset2.addSeries(((XYSeries[])SRTFTask.getValue())[1]); //WERKT
         dataset2.addSeries(((XYSeries[])MLFBTask.getValue())[1]); //WERKT
         dataset2.addSeries(((XYSeries[])HRRNTask.getValue())[1]); //WERKT
 */
@@ -246,8 +246,8 @@ public class Logic {
         XYSeries serie = new XYSeries(time + " " + algorithm);
         int counter = 0;
         for (List<Process> percentile : partitionedList) {
-            int averageServiceTime = percentile.stream().map(Process::getServiceTime).mapToInt(i -> i).sum() / percentile.size();
-            int averageTime = 0;
+            double averageServiceTime = percentile.stream().map(Process::getServiceTime).mapToInt(i -> i).sum() / percentile.size();
+            double averageTime = 0;
 
             if (time.equals("WaitTime"))
                 averageTime = percentile.stream().map(Process::getWaitTime).mapToInt(i -> i).sum() / percentile.size();
@@ -257,6 +257,7 @@ public class Logic {
             serie.add(averageServiceTime, averageTime);
 
         }
+
         return serie;
     }
 
